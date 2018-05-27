@@ -1,0 +1,20 @@
+﻿  Shader.cpp
+  Zegar.cpp
+  Generowanie kodu...
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewAttachShader
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewCompileShader
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewCreateProgram
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewCreateShader
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewDeleteProgram
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewDeleteShader
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewDetachShader
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetAttribLocation
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetProgramInfoLog
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetProgramiv
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetShaderInfoLog
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetShaderiv
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewGetUniformLocation
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewLinkProgram
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewShaderSource
+Shader.obj : error LNK2001: nierozpoznany symbol zewnętrzny __imp___glewUseProgram
+F:\PP\sem 4\Grafika\Zegar\x64\Debug\Zegar.exe : fatal error LNK1120: liczba nierozpoznanych elementów zewnętrznych: 16

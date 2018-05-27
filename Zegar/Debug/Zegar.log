@@ -1,0 +1,28 @@
+﻿  Zegar.cpp
+f:\pp\sem 4\grafika\zegar\zegar\allmodels.h(3): warning C4067: nieoczekiwane tokeny występujące po dyrektywie preprocesora - oczekiwano nowego wiersza
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(42): warning C4305: "=": obcięcie z "double" do "float"
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(43): warning C4305: "=": obcięcie z "double" do "float"
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(44): warning C4305: "=": obcięcie z "double" do "float"
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(45): warning C4305: "=": obcięcie z "double" do "float"
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(221): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
+f:\pp\sem 4\grafika\zegar\zegar\zegar.cpp(222): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
+LINK : warning LNK4098: domyťlna biblioteka äLIBCMTö powoduje konflikt z innymi bibliotekami; u┐yj opcji /NODEFAULTLIB:biblioteka
+LINK : warning LNK4098: domyťlna biblioteka äMSVCRTö powoduje konflikt z innymi bibliotekami; u┐yj opcji /NODEFAULTLIB:biblioteka
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewAttachShader zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewCompileShader zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewCreateProgram zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewCreateShader zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewDeleteProgram zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewDeleteShader zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewDetachShader zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetAttribLocation zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetProgramInfoLog zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetProgramiv zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetShaderInfoLog zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetShaderiv zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewGetUniformLocation zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewLinkProgram zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewShaderSource zosta│ zaimportowany
+Shader.obj : warning LNK4049: lokalnie zdefiniowany symbol ___glewUseProgram zosta│ zaimportowany
+glew32s.lib(glew.obj) : warning LNK4099: nie znaleziono pliku PDB ävc120.pdbö z elementem äglew32s.lib(glew.obj)ö lub w pozycji äF:\PP\sem 4\Grafika\Zegar\Debug\vc120.pdbö; obiekt zostanie skonsolidowany bez informacji debugowania
+  Zegar.vcxproj -> F:\PP\sem 4\Grafika\Zegar\Debug\Zegar.exe
