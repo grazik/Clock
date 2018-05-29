@@ -1,4 +1,4 @@
-#include "model.h"
+#include "../Zegar/headers/Models/Model.h"
 
 namespace Models {
 	void Model::drawWire() {

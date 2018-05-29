@@ -111,7 +111,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
 
-	shaderProgram = new Shader("vertex.vs", "", "fragment.fs"); //Wczytaj program cieniuj¹cy
+	shaderProgram = new Shader("shaders/vertex.vs", "", "shaders/fragment.fs"); //Wczytaj program cieniuj¹cy
 
 	prepareObject(shaderProgram);
 }

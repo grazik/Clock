@@ -125,23 +125,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="sources\Models\Cube.cpp" />
+    <ClCompile Include="sources\Models\Model.cpp" />
+    <ClCompile Include="sources\Models\Shader.cpp" />
     <ClCompile Include="Zegar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.fs" />
-    <None Include="vertex.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="fur.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AllModels.h" />
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="headers\Models\AllModels.h" />
+    <ClInclude Include="headers\Models\Cube.h" />
+    <ClInclude Include="headers\Models\Model.h" />
+    <ClInclude Include="headers\Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.fs" />
+    <None Include="shaders\vertex.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
