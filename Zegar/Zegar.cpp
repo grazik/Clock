@@ -5,8 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Classes\headers\Shader.h"
-#include "Classes\headers\AllModels.h"
+#include "Classes/headers/Shader.h"
+#include "Models/AllModels.h"
 
 float speed_x = 0; // [radiany/s]
 float speed_y = 0; // [radiany/s]

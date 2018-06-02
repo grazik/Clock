@@ -1,4 +1,4 @@
-#include "Models\Cube\Cube.h"
+#include "Models/Cube/Cube.h"
 
 namespace Models {
 

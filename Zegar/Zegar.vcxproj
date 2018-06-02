@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\headers\Shader.h" />
+    <ClInclude Include="Models\AllModels.h" />
+    <ClInclude Include="Models\Cube\Cube.h" />
+    <ClInclude Include="Models\Model.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\sources\Model.cpp" />
+    <ClCompile Include="Classes\sources\Shader.cpp" />
+    <ClCompile Include="Models\Cube\Cube.cpp" />
+    <ClCompile Include="Zegar.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\fragment.fs" />
+    <None Include="Shaders\vertex.vs" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{62370EDC-9E29-40BF-A352-DEF942A060B7}</ProjectGuid>
@@ -76,7 +92,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/glfw/include;$(SolutionDir)/glew/include;$(SolutionDir)/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/glfw/include;$(SolutionDir)/glew/include;$(SolutionDir)/Zegar;$(SolutionDir)/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
     </ClCompile>
@@ -124,23 +140,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="sources\Models\Cube.cpp" />
-    <ClCompile Include="sources\Models\Model.cpp" />
-    <ClCompile Include="sources\Models\Shader.cpp" />
-    <ClCompile Include="Zegar.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AllModels.h" />
-    <ClInclude Include="headers\Models\AllModels.h" />
-    <ClInclude Include="headers\Models\Cube.h" />
-    <ClInclude Include="headers\Models\Model.h" />
-    <ClInclude Include="headers\Shader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\fragment.fs" />
-    <None Include="shaders\vertex.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

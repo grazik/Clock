@@ -1,3 +1,3 @@
 #pragma once
 
-#include "Cube.h"
+#include "Models/Cube/Cube.h"
