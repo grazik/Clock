@@ -1,4 +1,4 @@
-#include "../Zegar/headers/Models/Cube.h"
+#include "Models\Cube\Cube.h"
 
 namespace Models {
 
