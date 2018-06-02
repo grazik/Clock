@@ -15,7 +15,7 @@ out vec4 iC; //Kolor wyliczony w vertex shaderze
 
 void main(void) {
 
-    vec4 lp=vec4(0,0,-6,1); //Wspolrzedne swiatla w przestrzeni swiata
+    vec4 lp=vec4(0,0,0,1); //Wspolrzedne swiatla w przestrzeni oka
 
     vec4 ka=vec4(0,0,0,0); //Kolor obiektu w swietle otoczenia
     vec4 kd=color; //Kolor obiektu w swietle rozproszonym
@@ -23,7 +23,7 @@ void main(void) {
     vec4 la=vec4(0,0,0,0); //Kolor swiatla otoczenia
     vec4 ld=vec4(1,1,1,1); //Kolor swiatla rozpraszanego
 
-    vec4 l=normalize(V*lp-V*M*vertex); //Wektor do swiatla w przestrzeni oka
+    vec4 l=normalize(lp-V*M*vertex); //Wektor do swiatla w przestrzeni oka
     vec4 n=normalize(V*M*normal); //Wektor normalny w wierzcholku w przestrzeni oka
 
     float nl=max(dot(n,l),0); //Kosinus kata pomiedzy wektorami do swiatla i normalnym
