@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
@@ -43,18 +44,16 @@ void error_callback(int error, const char* description) {
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
 	if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-		if (key == GLFW_KEY_LEFT) camera->updateAngle(-1 * config::cameraAngleChange);
-		if (key == GLFW_KEY_RIGHT) camera->updateAngle(config::cameraAngleChange);
-		if (key == GLFW_KEY_UP) speed_x = -3.14;
-		if (key == GLFW_KEY_DOWN) speed_x = 3.14;
-	}
-
-
-	if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_LEFT) speed_y = 0;
-		if (key == GLFW_KEY_RIGHT) speed_y = 0;
-		if (key == GLFW_KEY_UP) speed_x = 0;
-		if (key == GLFW_KEY_DOWN) speed_x = 0;
+		if (key == GLFW_KEY_LEFT) camera->updateRotationAngle(-1 * config::cameraRotationAngleChange);
+		if (key == GLFW_KEY_RIGHT) camera->updateRotationAngle(config::cameraRotationAngleChange);
+		if (key == GLFW_KEY_UP) {
+			camera->updateMoveAngle(config::cameraMoveAngleChange);
+			camera->updatePostion(cos(3.14f * camera->getRotationAngle() / 180), config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), sin(3.14f * camera->getRotationAngle() / 180));
+		}
+		if (key == GLFW_KEY_DOWN) {
+			camera->updateMoveAngle(-config::cameraMoveAngleChange);
+			camera->updatePostion(-cos(3.14f * camera->getRotationAngle() / 180), -config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), -sin(3.14f * camera->getRotationAngle() / 180));
+		}
 	}
 }
 
@@ -168,7 +167,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 
 	glm::mat4 V = glm::lookAt( //Wylicz macierz widoku
 		camera->getPosition(),
-		glm::vec3(cos(3.14*camera->getAngle() / 180), 0, sin(3.14*camera->getAngle() / 180)) + camera->getPosition(),
+		glm::vec3(cos(3.14*camera->getRotationAngle() / 180), 0, sin(3.14*camera->getRotationAngle() / 180)) + camera->getPosition(),
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
 
