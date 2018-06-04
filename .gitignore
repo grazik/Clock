@@ -64,6 +64,7 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
+!Zegar/Models/**/*.obj
 *.iobj
 *.pch
 *.pdb
@@ -330,5 +331,3 @@ ASALocalRun/
 .mfractor/
 
 *.vcxproj
-
-!Zegar/Models/*
