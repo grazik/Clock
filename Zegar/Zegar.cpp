@@ -28,7 +28,7 @@ GLuint bufColors;  //Uchwyt na bufor VBO przechowuj¹cy tablicê kolorów
 GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 
 //TeaPot
-Teapot* teapot = new Teapot;
+Gear* teapot = new Gear;
 float* vertices = teapot->getVertices();
 float* normals = teapot->getVertexNormals();
 int vertexCount = teapot->getVertexCount();
@@ -170,7 +170,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 
 	//Wylicz macierz modelu rysowanego obiektu
 	glm::mat4 M = glm::mat4(1.0f);
-	M = glm::rotate(M, angle_x, glm::vec3(1, 0, 0));
+	M = glm::rotate(M, 3.14f*90/180, glm::vec3(1, 0, 1));
 	M = glm::rotate(M, angle_y, glm::vec3(0, 1, 0));
 
 	//Narysuj obiekt

@@ -23,6 +23,8 @@
     <ClInclude Include="Classes\headers\Shader.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
+    <ClInclude Include="Models\Gear\Gear.h" />
+    <ClInclude Include="Models\Gear\GearInternal.h" />
     <ClInclude Include="Models\Model.h" />
     <ClInclude Include="Models\TeaPot\teapot.h" />
     <ClInclude Include="Models\TeaPot\TeapotInternal.h" />
@@ -31,6 +33,7 @@
     <ClCompile Include="Classes\sources\Camera.cpp" />
     <ClCompile Include="Classes\sources\Model.cpp" />
     <ClCompile Include="Classes\sources\Shader.cpp" />
+    <ClCompile Include="Models\Gear\Gear.cpp" />
     <ClCompile Include="Models\TeaPot\teapot.cpp" />
     <ClCompile Include="Zegar.cpp" />
   </ItemGroup>
