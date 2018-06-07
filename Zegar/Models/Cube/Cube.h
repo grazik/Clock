@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model.h"
+#include "Models/Model.h"
 
 namespace Models {
 	namespace CubeInternal {

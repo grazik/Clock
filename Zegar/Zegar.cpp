@@ -1,12 +1,15 @@
 #include <iostream>
+#include <cmath>
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "headers/Shader.h"
-#include "headers/Models/AllModels.h"
+#include "Classes/headers/Shader.h"
+#include "Classes/headers/Camera.h"
+#include "Models/AllModels.h"
+#include "config.h"
 
 float speed_x = 0; // [radiany/s]
 float speed_y = 0; // [radiany/s]
@@ -15,18 +18,20 @@ float aspect = 1; //Stosunek szerokoœci do wysokoœci okna
 
 				  //Uchwyty na shadery
 Shader* shaderProgram; //WskaŸnik na obiekt reprezentuj¹cy program cieniuj¹cy.
+Camera* camera = new Camera(config::cameraX, config::cameraY, config::cameraZ);
 
-							  //Uchwyty na VAO i bufory wierzcho³ków
+
+//Uchwyty na VAO i bufory wierzcho³ków
 GLuint vao;
 GLuint bufVertices; //Uchwyt na bufor VBO przechowuj¹cy tablicê wspó³rzêdnych wierzcho³ków
 GLuint bufColors;  //Uchwyt na bufor VBO przechowuj¹cy tablicê kolorów
 GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 
-//Kostka
-float* vertices=Models::CubeInternal::vertices;
-float* colors=Models::CubeInternal::colors;
-float* normals=Models::CubeInternal::normals;
-int vertexCount=Models::CubeInternal::vertexCount;
+//TeaPot
+float* vertices = Models::TeapotInternal::vertices;
+float* colors = Models::TeapotInternal::colors;
+float* normals = Models::TeapotInternal::vertexNormals;
+int vertexCount = Models::TeapotInternal::vertexCount;
 
 
 
@@ -38,19 +43,17 @@ void error_callback(int error, const char* description) {
 //Procedura obs³ugi klawiatury
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
-	if (action == GLFW_PRESS) {
-		if (key == GLFW_KEY_LEFT) speed_y = -3.14;
-		if (key == GLFW_KEY_RIGHT) speed_y = 3.14;
-		if (key == GLFW_KEY_UP) speed_x = -3.14;
-		if (key == GLFW_KEY_DOWN) speed_x = 3.14;
-	}
-
-
-	if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_LEFT) speed_y = 0;
-		if (key == GLFW_KEY_RIGHT) speed_y = 0;
-		if (key == GLFW_KEY_UP) speed_x = 0;
-		if (key == GLFW_KEY_DOWN) speed_x = 0;
+	if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+		if (key == GLFW_KEY_LEFT) camera->updateRotationAngle(-1 * config::cameraRotationAngleChange);
+		if (key == GLFW_KEY_RIGHT) camera->updateRotationAngle(config::cameraRotationAngleChange);
+		if (key == GLFW_KEY_UP) {
+			camera->updateMoveAngle(config::cameraMoveAngleChange);
+			camera->updatePostion(cos(3.14f * camera->getRotationAngle() / 180), config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), sin(3.14f * camera->getRotationAngle() / 180));
+		}
+		if (key == GLFW_KEY_DOWN) {
+			camera->updateMoveAngle(-config::cameraMoveAngleChange);
+			camera->updatePostion(-cos(3.14f * camera->getRotationAngle() / 180), -config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), -sin(3.14f * camera->getRotationAngle() / 180));
+		}
 	}
 }
 
@@ -163,8 +166,8 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	glm::mat4 P = glm::perspective(50 * 3.1415f / 180, aspect, 1.0f, 50.0f); //Wylicz macierz rzutowania
 
 	glm::mat4 V = glm::lookAt( //Wylicz macierz widoku
-		glm::vec3(0.0f, 0.0f, -5.0f),
-		glm::vec3(0.0f, 0.0f, 0.0f),
+		camera->getPosition(),
+		glm::vec3(cos(3.14*camera->getRotationAngle() / 180), 0, sin(3.14*camera->getRotationAngle() / 180)) + camera->getPosition(),
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
 

@@ -1,4 +1,4 @@
-#include "../Zegar/headers/Shader.h"
+#include "Classes/headers/Shader.h"
 
 GLuint Shader::loadShader(GLint type, std::string filename) {
 	// loading shader from file
