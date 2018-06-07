@@ -28,10 +28,10 @@ GLuint bufColors;  //Uchwyt na bufor VBO przechowuj¹cy tablicê kolorów
 GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 
 //TeaPot
-float* vertices = Models::TeapotInternal::vertices;
-float* colors = Models::TeapotInternal::colors;
-float* normals = Models::TeapotInternal::vertexNormals;
-int vertexCount = Models::TeapotInternal::vertexCount;
+Teapot* teapot = new Teapot;
+float* vertices = teapot->getVertices();
+float* normals = teapot->getVertexNormals();
+int vertexCount = teapot->getVertexCount();
 
 
 
@@ -91,7 +91,6 @@ void assignVBOtoAttribute(Shader *shaderProgram, const char* attributeName, GLui
 void prepareObject(Shader *shaderProgram) {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = makeBuffer(vertices, vertexCount, sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
-	bufColors = makeBuffer(colors, vertexCount, sizeof(float) * 4);//VBO z kolorami wierzcho³ków
 	bufNormals = makeBuffer(normals, vertexCount, sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
 
 																	 //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
@@ -100,7 +99,6 @@ void prepareObject(Shader *shaderProgram) {
 	glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
 
 	assignVBOtoAttribute(shaderProgram, "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
-	assignVBOtoAttribute(shaderProgram, "color", bufColors, 4); //"color" odnosi siê do deklaracji "in vec4 color;" w vertex shaderze
 	assignVBOtoAttribute(shaderProgram, "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
 
 	glBindVertexArray(0); //Dezaktywuj VAO
@@ -125,7 +123,6 @@ void freeOpenGLProgram() {
 
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
-	glDeleteBuffers(1, &bufColors); //Usuniêcie VBO z kolorami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
 }
 

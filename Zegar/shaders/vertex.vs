@@ -7,13 +7,14 @@ uniform mat4 M;
 
 //Atrybuty
 in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
-in vec4 color;  //kolor wierzcholka (na razie ignorowany)
+//in vec4 color;  //kolor wierzcholka (na razie ignorowany)
 in vec4 normal; //wektor normalny w wierzcholku w przestrzeni modelu
 
 //Zmienne interpolowane
 out vec4 iC; //Kolor wyliczony w vertex shaderze
 
 void main(void) {
+	vec4 color=vec4(1,0,0,1);
 
     vec4 lp=vec4(0,0,0,1); //Wspolrzedne swiatla w przestrzeni oka
 

@@ -17,9 +17,6 @@ jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 */
 
-#ifndef TEAPOT_H
-#define TEAPOT_H
-
 //Utah teapot model made out of triangles
 //Contains arrays
 //vertices - vertex positions in homogenous coordinates
@@ -29,29 +26,11 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 //colors - vertex colors (rgba)
 //TBN friendly
 //Culling GL_CW
-
+#pragma once
 #include "Models/Model.h"
 
-namespace Models {
-		
-	
-	namespace TeapotInternal {
-		extern float vertices[];
-		extern float normals[];
-		extern float vertexNormals[];
-		extern float texCoords[];
-		extern float colors[];
-		extern unsigned int vertexCount;
-	} 
- 
-	class Teapot: public Model {
-		public:
-			Teapot();			
-			virtual ~Teapot();
-			virtual void drawSolid();			
-	};
-
-	extern Teapot teapot;
-
-}
-#endif
+class Teapot: public Model {
+	public:
+		Teapot();			
+		virtual ~Teapot() {};
+};
