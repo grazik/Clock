@@ -1,36 +1,20 @@
-/*
-Niniejszy program jest wolnym oprogramowaniem; możesz go
-rozprowadzać dalej i / lub modyfikować na warunkach Powszechnej
-Licencji Publicznej GNU, wydanej przez Fundację Wolnego
-Oprogramowania - według wersji 2 tej Licencji lub(według twojego
-wyboru) którejś z późniejszych wersji.
-
-Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on
-użyteczny - jednak BEZ JAKIEJKOLWIEK GWARANCJI, nawet domyślnej
-gwarancji PRZYDATNOŚCI HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH
-ZASTOSOWAŃ.W celu uzyskania bliższych informacji sięgnij do
-Powszechnej Licencji Publicznej GNU.
-
-Z pewnością wraz z niniejszym programem otrzymałeś też egzemplarz
-Powszechnej Licencji Publicznej GNU(GNU General Public License);
-jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
-Place, Fifth Floor, Boston, MA  02110 - 1301  USA
-*/
-
-//Utah teapot model made out of triangles
-//Contains arrays
-//vertices - vertex positions in homogenous coordinates
-//normals -vertex normals in homogenous coordinates (flat shading)
-//vertexNormals - vertex normals in homogenous coordinates (smooth shading)
-//texCoords -  texturing coordinates
-//colors - vertex colors (rgba)
-//TBN friendly
-//Culling GL_CW
 #pragma once
 #include "Models/Model.h"
 
 class Gear: public Model {
 	public:
-		Gear();			
+		Gear();	
+
+		GLuint getVao() { return vao; }
+		GLuint getBufVertices() { return bufVertices; }
+		GLuint getBufNormals() { return bufNormals; }
+
+		void drawObject();
+		void prepareObject();
 		virtual ~Gear() {};
+
+private:
+	GLuint vao;
+	GLuint bufVertices; //Uchwyt na bufor VBO przechowuj�cy tablic� wsp�rz�dnych wierzcho�k�w
+	GLuint bufNormals; //Uchwyt na bufor VBO przechowuj�cy tablick� wektor�w normalnych
 };
