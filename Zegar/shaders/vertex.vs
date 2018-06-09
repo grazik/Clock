@@ -29,9 +29,7 @@ void main(void) {
 
     float nl=max(dot(n,l),0); //Kosinus kata pomiedzy wektorami do swiatla i normalnym
 
-    //iC=ka*la+kd*ld*vec4(nl,nl,nl,1); //Lambertowski model swiatla rozproszonego
-
-	iC = color;
+    iC=ka*la+kd*ld*vec4(nl,nl,nl,1); //Lambertowski model swiatla rozproszonego
 
 	gl_Position=P*V*M*vertex;
 }

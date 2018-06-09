@@ -24,7 +24,7 @@ class Model {
 		void setTexCoords(float* texCoordsArray) { texCoords = texCoordsArray; }
 		void setShader(Shader* newShader) { shader = newShader; }
 
-		virtual void drawObject() = 0;
+		virtual void drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) = 0;
 		virtual void prepareObject() = 0;
 
 	private:

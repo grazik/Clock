@@ -3,13 +3,13 @@
 
 class Gear: public Model {
 	public:
-		Gear();	
+		Gear(Shader* shader);	
 
 		GLuint getVao() { return vao; }
 		GLuint getBufVertices() { return bufVertices; }
 		GLuint getBufNormals() { return bufNormals; }
 
-		void drawObject();
+		void drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM);
 		void prepareObject();
 		virtual ~Gear() {};
 
