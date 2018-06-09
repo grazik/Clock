@@ -9,6 +9,7 @@
 #include "Classes/headers/Shader.h"
 #include "Classes/headers/Camera.h"
 #include "Models/AllModels.h"
+#include "Classes/headers/Texture.h"
 #include "config.h"
 
 #include "Classes/headers/Graphics.h"
@@ -28,6 +29,7 @@ GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normaln
 //TeaPot
 Gear* gear;
 Shader* shader;
+Texture* texture;
 
 //Procedura obs³ugi b³êdów
 void error_callback(int error, const char* description) {
@@ -101,14 +103,15 @@ void windowResize(GLFWwindow* window, int width, int height) {
 //Procedura inicjuj¹ca
 void initOpenGLProgram(GLFWwindow* window) {
 	//************Tutaj umieszczaj kod, który nale¿y wykonaæ raz, na pocz¹tku programu************
-	glClearColor(0, 0.5, 0, 1); //Czyœæ ekran na czarno
+	glClearColor(0, 0.05, 0.2, 1);
 	glEnable(GL_DEPTH_TEST); //W³¹cz u¿ywanie Z-Bufora
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
 
 	//shaderProgram = new Shader("shaders/vertex.vs", "", "shaders/fragment.fs"); //Wczytaj program cieniuj¹cy
 	shader = new Shader("Shaders/vertex.vs", "", "Shaders/fragment.fs");
-	gear = new Gear(shader);
+	texture = new Texture("Textures/gold.png");
+	gear = new Gear(shader, texture);
 	gear->prepareObject();
 }
 
@@ -119,34 +122,6 @@ void freeOpenGLProgram() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
-}
-
-void drawObject(GLuint vao, Shader *shaderProgram, glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) {
-	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
-	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
-	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
-	/*shaderProgram->use();
-
-	//Przeka¿ do shadera macierze P,V i M.
-	//W linijkach poni¿ej, polecenie:
-	//  shaderProgram->getUniformLocation("P")
-	//pobiera numer slotu odpowiadaj¹cego zmiennej jednorodnej o podanej nazwie
-	//UWAGA! "P" w powy¿szym poleceniu odpowiada deklaracji "uniform mat4 P;" w vertex shaderze,
-	//a mP w glm::value_ptr(mP) odpowiada argumentowi  "mat4 mP;" TYM pliku.
-	//Ca³a poni¿sza linijka przekazuje do zmiennej jednorodnej P w vertex shaderze dane z argumentu mP niniejszej funkcji
-	//Pozosta³e polecenia dzia³aj¹ podobnie.
-	glUniformMatrix4fv(shaderProgram->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
-	glUniformMatrix4fv(shaderProgram->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
-	glUniformMatrix4fv(shaderProgram->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
-
-	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
-	glBindVertexArray(vao);
-
-	//Narysowanie obiektu
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
-	//Posprz¹tanie po sobie (niekonieczne w sumie je¿eli korzystamy z VAO dla ka¿dego rysowanego obiektu)
-	glBindVertexArray(0);*/
 }
 
 //Procedura rysuj¹ca zawartoœæ sceny
@@ -165,11 +140,18 @@ void drawScene(GLFWwindow* window) {
 
 	//Wylicz macierz modelu rysowanego obiektu
 	glm::mat4 M = glm::mat4(1.0f);
-	M = glm::rotate(M, 3.14f*90/180, glm::vec3(1, 0, 1));
+	M = glm::rotate(M, 3.14f*90/180, glm::vec3(1, 0, 0));
+	M = glm::rotate(M, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	M = glm::rotate(M, 3.14f * gear->getAngke() / 180, glm::vec3(0, 1, 0));
+	
+	if (glfwGetTime() >= 1) {
+		gear->updateAngle(5.0f);
+		glfwSetTime(0); //Wyzeruj licznik czasu
+	}
+	
 
-	//Narysuj obiekt
-	//drawObject(vao, shaderProgram, P, V, M);
 	gear->drawObject(P, V, M);
+	std::cout << glfwGetTime() << '\n';
 
 	//Przerzuæ tylny bufor na przedni
 	glfwSwapBuffers(window);
@@ -211,7 +193,6 @@ int main(void)
 					//G³ówna pêtla
 	while (!glfwWindowShouldClose(window)) { //Tak d³ugo jak okno nie powinno zostaæ zamkniête
 		// angle_x += speed_x * glfwGetTime(); //Zwiêksz k¹t o prêdkoœæ k¹tow¹ razy czas jaki up³yn¹³ od poprzedniej klatki
-		glfwSetTime(0); //Wyzeruj licznik czasu
 		drawScene(window); //Wykonaj procedurê rysuj¹c¹
 		glfwPollEvents(); //Wykonaj procedury callback w zaleznoœci od zdarzeñ jakie zasz³y.
 	}

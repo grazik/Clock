@@ -1,7 +1,7 @@
 #include "Models/Gear/Gear.h"
 #include "Models/Gear/GearInternal.h"
 
-Gear::Gear(Shader* shader) {
+Gear::Gear(Shader* shader, Texture* tex) {
 	setName(GearInternal::name);
 	setTextName(GearInternal::texName);
 	setVertices(GearInternal::vertices);
@@ -9,6 +9,8 @@ Gear::Gear(Shader* shader) {
 	setTexCoords(GearInternal::texCoords);
 	setVertexCount(GearInternal::vertexCount);
 	setShader(shader);
+	texture = tex;
+	angle = 0;
 }
 
 void Gear::drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) {
@@ -28,6 +30,10 @@ void Gear::drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
+	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
 
 	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
 	glBindVertexArray(vao);
@@ -43,6 +49,7 @@ void Gear::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
+	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
 
 																			   //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
@@ -51,6 +58,7 @@ void Gear::prepareObject() {
 
 	Graphics::assignVBOtoAttribute(getShader(), "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
+	Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
 
 	glBindVertexArray(0); //Dezaktywuj VAO
 }
