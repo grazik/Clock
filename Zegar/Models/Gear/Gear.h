@@ -5,8 +5,9 @@
 class Gear: public Model {
 	public:
 		Gear(Shader* shader, Texture* tex);
+		~Gear();
 
-		float getAngke() { return angle; }
+		float getAngle() { return angle; }
 		GLuint getVao() { return vao; }
 		GLuint getBufVertices() { return bufVertices; }
 		GLuint getBufNormals() { return bufNormals; }
@@ -16,9 +17,8 @@ class Gear: public Model {
 		void SetAngle(float newAngle) { angle = newAngle; }
 		void updateAngle(float newAngle) { angle += newAngle; }
 
-		void drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM);
+		void drawObject(glm::mat4 mP, glm::mat4 mV);
 		void prepareObject();
-		virtual ~Gear() {};
 
 private:
 	float angle;

@@ -7,7 +7,7 @@
 
 class Model {
 	public:
-		~Model() {};
+		virtual ~Model() {};
 		int getVertexCount() { return vertexCount; }
 		float* getVertices() { return vertices; }
 		float* getVertexNormals() { return vertexNormals; }
@@ -24,8 +24,9 @@ class Model {
 		void setTexCoords(float* texCoordsArray) { texCoords = texCoordsArray; }
 		void setShader(Shader* newShader) { shader = newShader; }
 
-		virtual void drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) = 0;
+		virtual void drawObject(glm::mat4 mP, glm::mat4 mV) = 0;
 		virtual void prepareObject() = 0;
+		virtual void updateAngle(float newAngle) {};
 
 	private:
 		std::string texName;

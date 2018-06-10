@@ -20,16 +20,29 @@ float aspect = 1; //Stosunek szerokoœci do wysokoœci okna
 /*Shader* shaderProgram = config::defaultShader;*/ //WskaŸnik na obiekt reprezentuj¹cy program cieniuj¹cy.
 Camera* camera = new Camera(config::cameraX, config::cameraY, config::cameraZ);
 
+std::vector<Shader*> prepareShaders() {
+	std::vector<Shader*> shaders;
 
-//Uchwyty na VAO i bufory wierzcho³ków
-GLuint vao;
-GLuint bufVertices; //Uchwyt na bufor VBO przechowuj¹cy tablicê wspó³rzêdnych wierzcho³ków
-GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
+	shaders.push_back(new Shader("shaders/vertex.vs", "", "shaders/fragment.fs"));
+	
+	return shaders;
+}
 
-//TeaPot
-Gear* gear;
-Shader* shader;
-Texture* texture;
+std::vector<Texture*> prepareTextures() {
+	std::vector<Texture*> textures;
+
+	textures.push_back(new Texture("Textures/gold.png"));
+	
+	return textures;
+}
+
+std::vector<Model*> prepareModels(std::vector<Shader*> shaders, std::vector<Texture*> textures) {
+	std::vector<Model*> models;
+
+	models.push_back(new Gear(shaders[0], textures[0]));
+
+	return models;
+}
 
 //Procedura obs³ugi b³êdów
 void error_callback(int error, const char* description) {
@@ -64,42 +77,6 @@ void windowResize(GLFWwindow* window, int width, int height) {
 	}
 }
 
-//Tworzy bufor VBO z tablicy
-//GLuint makeBuffer(void *data, int vertexCount, int vertexSize) {
-//	GLuint handle;
-//
-//	glGenBuffers(1, &handle);//Wygeneruj uchwyt na Vertex Buffer Object (VBO), który bêdzie zawiera³ tablicê danych
-//	glBindBuffer(GL_ARRAY_BUFFER, handle);  //Uaktywnij wygenerowany uchwyt VBO
-//	glBufferData(GL_ARRAY_BUFFER, vertexCount*vertexSize, data, GL_STATIC_DRAW);//Wgraj tablicê do VBO
-//
-//	return handle;
-//}
-
-////Przypisuje bufor VBO do atrybutu
-//void assignVBOtoAttribute(Shader *shaderProgram, const char* attributeName, GLuint bufVBO, int vertexSize) {
-//	GLuint location = shaderProgram->getAttribLocation(attributeName); //Pobierz numer slotu dla atrybutu
-//	glBindBuffer(GL_ARRAY_BUFFER, bufVBO);  //Uaktywnij uchwyt VBO
-//	glEnableVertexAttribArray(location); //W³¹cz u¿ywanie atrybutu o numerze slotu zapisanym w zmiennej location
-//	glVertexAttribPointer(location, vertexSize, GL_FLOAT, GL_FALSE, 0, NULL); //Dane do slotu location maj¹ byæ brane z aktywnego VBO
-//}
-
-//Przygotowanie do rysowania pojedynczego obiektu
-//void prepareObject(Shader *shaderProgram) {
-//	//Zbuduj VBO z danymi obiektu do narysowania
-//	bufVertices = Graphics::makeBuffer(vertices, vertexCount, sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
-//	bufNormals = Graphics::makeBuffer(normals, vertexCount, sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
-//
-//																	 //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
-//	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
-//
-//	glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
-//
-//	Graphics::assignVBOtoAttribute(shaderProgram, "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
-//	Graphics::assignVBOtoAttribute(shaderProgram, "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
-//
-//	glBindVertexArray(0); //Dezaktywuj VAO
-//}
-
 //Procedura inicjuj¹ca
 void initOpenGLProgram(GLFWwindow* window) {
 	//************Tutaj umieszczaj kod, który nale¿y wykonaæ raz, na pocz¹tku programu************
@@ -107,25 +84,29 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST); //W³¹cz u¿ywanie Z-Bufora
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
-
-	//shaderProgram = new Shader("shaders/vertex.vs", "", "shaders/fragment.fs"); //Wczytaj program cieniuj¹cy
-	shader = new Shader("Shaders/vertex.vs", "", "Shaders/fragment.fs");
-	texture = new Texture("Textures/gold.png");
-	gear = new Gear(shader, texture);
-	gear->prepareObject();
 }
 
 //Zwolnienie zasobów zajêtych przez program
-void freeOpenGLProgram() {
-	//delete config::defaultShader; //Usuniêcie programu cieniuj¹cego
+void freeOpenGLProgram(std::vector<Model*>& models, std::vector<Shader*>& shaders, std::vector<Texture*>& textures) {
+	for (int i = 0; i < models.size(); i++) {
+		delete models[i];
+	}
 
-	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
-	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
-	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
+	for (int i = 0; i < shaders.size(); i++) {
+		delete shaders[i];
+	}
+
+	for (int i = 0; i < textures.size(); i++) {
+		delete textures[i];
+	}
+
+	models.clear();
+	shaders.clear();
+	textures.clear();
 }
 
 //Procedura rysuj¹ca zawartoœæ sceny
-void drawScene(GLFWwindow* window) {
+void drawScene(GLFWwindow* window, std::vector<Model*>& models) {
 	//************Tutaj umieszczaj kod rysuj¹cy obraz******************l
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Wykonaj czyszczenie bufora kolorów
@@ -137,30 +118,24 @@ void drawScene(GLFWwindow* window) {
 		glm::vec3(cos(3.14*camera->getRotationAngle() / 180), 0, sin(3.14*camera->getRotationAngle() / 180)) + camera->getPosition(),
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
-
-	//Wylicz macierz modelu rysowanego obiektu
-	glm::mat4 M = glm::mat4(1.0f);
-	M = glm::rotate(M, 3.14f*90/180, glm::vec3(1, 0, 0));
-	M = glm::rotate(M, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
-	M = glm::rotate(M, 3.14f * gear->getAngke() / 180, glm::vec3(0, 1, 0));
-	
 	if (glfwGetTime() >= 1) {
-		gear->updateAngle(5.0f);
+		models[0]->updateAngle(5.0f);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	
-
-	gear->drawObject(P, V, M);
-	std::cout << glfwGetTime() << '\n';
+	for (int i = 0; i < models.size(); i++) {
+		models[i]->drawObject(P, V);
+	}
 
 	//Przerzuæ tylny bufor na przedni
 	glfwSwapBuffers(window);
 }
 
+int main(void) {
+	std::vector<Model*> models;
+	std::vector<Shader*> shaders;
+	std::vector<Texture*> textures;
 
-
-int main(void)
-{
 	GLFWwindow* window; //WskaŸnik na obiekt reprezentuj¹cy okno
 
 	glfwSetErrorCallback(error_callback);//Zarejestruj procedurê obs³ugi b³êdów
@@ -187,17 +162,19 @@ int main(void)
 	}
 
 	initOpenGLProgram(window); //Operacje inicjuj¹ce
+	shaders = prepareShaders();
+	textures = prepareTextures();
+	models = prepareModels(shaders, textures);
 
 	glfwSetTime(0); //Wyzeruj licznik czasu
 
 					//G³ówna pêtla
 	while (!glfwWindowShouldClose(window)) { //Tak d³ugo jak okno nie powinno zostaæ zamkniête
-		// angle_x += speed_x * glfwGetTime(); //Zwiêksz k¹t o prêdkoœæ k¹tow¹ razy czas jaki up³yn¹³ od poprzedniej klatki
-		drawScene(window); //Wykonaj procedurê rysuj¹c¹
+		drawScene(window, models); //Wykonaj procedurê rysuj¹c¹
 		glfwPollEvents(); //Wykonaj procedury callback w zaleznoœci od zdarzeñ jakie zasz³y.
 	}
 
-	freeOpenGLProgram();
+	freeOpenGLProgram(models, shaders, textures);
 
 	glfwDestroyWindow(window); //Usuñ kontekst OpenGL i okno
 	glfwTerminate(); //Zwolnij zasoby zajête przez GLFW

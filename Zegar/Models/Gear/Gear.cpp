@@ -11,9 +11,24 @@ Gear::Gear(Shader* shader, Texture* tex) {
 	setShader(shader);
 	texture = tex;
 	angle = 0;
+
+	prepareObject();
 }
 
-void Gear::drawObject(glm::mat4 mP, glm::mat4 mV, glm::mat4 mM) {
+Gear::~Gear() {
+	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
+	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
+	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
+	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
+}
+
+void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
+	//Wylicz macierz modelu rysowanego obiektu
+	glm::mat4 mM = glm::mat4(1.0f);
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(1, 0, 0));
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	mM = glm::rotate(mM, 3.14f * getAngle() / 180, glm::vec3(0, 1, 0));
+
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
 	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
@@ -49,7 +64,8 @@ void Gear::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
-	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
+	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
+
 
 																			   //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
