@@ -15,6 +15,7 @@ class Model {
 		std::string getTexName() { return texName; }
 		std::string getName() { return name; }
 		Shader* getShader() { return shader; }
+		glm::vec3 getPosition() { return position; }
 
 		void setTextName(std::string name) { texName = name; }
 		void setName(std::string newName) { name = newName; }
@@ -23,6 +24,7 @@ class Model {
 		void setVertexNormals(float* vertexNormalsArray) { vertexNormals = vertexNormalsArray; }
 		void setTexCoords(float* texCoordsArray) { texCoords = texCoordsArray; }
 		void setShader(Shader* newShader) { shader = newShader; }
+		void setPostiotion(glm::vec3 pos) { position = pos; }
 
 		virtual void drawObject(glm::mat4 mP, glm::mat4 mV) = 0;
 		virtual void prepareObject() = 0;
@@ -36,4 +38,5 @@ class Model {
 		float* vertexNormals;
 		float* texCoords;
 		Shader* shader;
+		glm::vec3 position;
 };

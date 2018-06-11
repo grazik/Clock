@@ -39,7 +39,8 @@ std::vector<Texture*> prepareTextures() {
 std::vector<Model*> prepareModels(std::vector<Shader*> shaders, std::vector<Texture*> textures) {
 	std::vector<Model*> models;
 
-	models.push_back(new Gear(shaders[0], textures[0]));
+	models.push_back(new Gear(shaders[0], textures[0], glm::vec3(0,0,-0.5f), 1.0f, 30.0f));
+	models.push_back(new Gear(shaders[0], textures[0], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f));
 
 	return models;
 }
@@ -120,6 +121,7 @@ void drawScene(GLFWwindow* window, std::vector<Model*>& models) {
 
 	if (glfwGetTime() >= 1) {
 		models[0]->updateAngle(5.0f);
+		models[1]->updateAngle(-5.0f);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	

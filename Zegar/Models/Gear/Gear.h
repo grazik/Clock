@@ -4,7 +4,7 @@
 
 class Gear: public Model {
 	public:
-		Gear(Shader* shader, Texture* tex);
+		Gear(Shader* shader, Texture* tex, glm::vec3 pos, float scale, float deg);
 		~Gear();
 
 		float getAngle() { return angle; }
@@ -13,6 +13,7 @@ class Gear: public Model {
 		GLuint getBufNormals() { return bufNormals; }
 		GLuint getBufTexCoords() { return bufTexCoords; }
 		Texture* getTexture() { return texture; }
+		float getScale() { return scale; }
 
 		void SetAngle(float newAngle) { angle = newAngle; }
 		void updateAngle(float newAngle) { angle += newAngle; }
@@ -27,4 +28,5 @@ private:
 	GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 	GLuint bufTexCoords;
 	Texture* texture;
+	float scale;
 };
