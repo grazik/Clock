@@ -1,4 +1,3 @@
 #pragma once
 
-#include "Models/Cube/Cube.h"
-#include "Models/TeaPot/teapot.h"
+#include "Models/Gear/Gear.h"
