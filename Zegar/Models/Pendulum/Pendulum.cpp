@@ -3,10 +3,9 @@
 
 Pendulum::Pendulum(Shader* shader, Texture* tex, glm::vec3 pos, float size, float deg) {
 	setName(PendulumInternal::name);
-	//setTextName(PendulumInternal::texName);
 	setVertices(PendulumInternal::vertices);
 	setVertexNormals(PendulumInternal::vertexNormals);
-	//setTexCoords(PendulumInternal::texCoords);
+	setTexCoords(PendulumInternal::texCoords);
 	setVertexCount(PendulumInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
@@ -27,8 +26,9 @@ void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
+	mM = glm::translate(mM, getPosition());
 	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 1, 0));
-	mM = glm::translate(mM, glm::vec3(0, 3, -0.3));
+	mM = glm::rotate(mM, 3.14f * getAngle() / 180, glm::vec3(0, 0, 1));
 	
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
@@ -47,10 +47,10 @@ void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
-	//glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
+	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, texture->getHandler());
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
 
 	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
 	glBindVertexArray(vao);
@@ -66,7 +66,7 @@ void Pendulum::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
-	//bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
+	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
 
 
 																			   //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
@@ -76,7 +76,7 @@ void Pendulum::prepareObject() {
 
 	Graphics::assignVBOtoAttribute(getShader(), "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
-	//Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
+	Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
 
 	glBindVertexArray(0); //Dezaktywuj VAO
 }
