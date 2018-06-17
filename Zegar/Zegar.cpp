@@ -41,6 +41,7 @@ std::vector<Model*> prepareModels(std::vector<Shader*> shaders, std::vector<Text
 
 	models.push_back(new Gear(shaders[0], textures[0], glm::vec3(0,0,-0.5f), 1.0f, 30.0f));
 	models.push_back(new Gear(shaders[0], textures[0], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f));
+	models.push_back(new Pendulum(shaders[0], textures[0], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f));
 
 	return models;
 }
@@ -85,6 +86,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST); //W³¹cz u¿ywanie Z-Bufora
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
+	glEnable(GL_COLOR_MATERIAL);
 }
 
 //Zwolnienie zasobów zajêtych przez program
