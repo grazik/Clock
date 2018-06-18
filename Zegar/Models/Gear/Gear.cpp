@@ -3,7 +3,6 @@
 
 Gear::Gear(Shader* shader, Texture* tex, glm::vec3 pos, float size, float deg) {
 	setName(GearInternal::name);
-	setTextName(GearInternal::texName);
 	setVertices(GearInternal::vertices);
 	setVertexNormals(GearInternal::vertexNormals);
 	setTexCoords(GearInternal::texCoords);
