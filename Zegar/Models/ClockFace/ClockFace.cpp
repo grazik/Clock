@@ -25,6 +25,8 @@ void ClockFace::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 1, 0));
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,

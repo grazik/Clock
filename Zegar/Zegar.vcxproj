@@ -27,6 +27,7 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
     <ClInclude Include="Models\ClockFace\ClockFace.h" />
+    <ClInclude Include="Models\ClockFace\ClockFaceInternal.h" />
     <ClInclude Include="Models\Gear\Gear.h" />
     <ClInclude Include="Models\Gear\GearInternal.h" />
     <ClInclude Include="Models\Model.h" />
