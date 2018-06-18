@@ -45,6 +45,12 @@
     <ClInclude Include="Classes\headers\Texture.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Models\Pendulum\Pendulum.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Pendulum\PendulumInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\sources\Model.cpp">
@@ -74,9 +80,16 @@
     <ClCompile Include="Classes\sources\Texture.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Pendulum\Pendulum.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\fragment.fs" />
-    <None Include="Shaders\vertex.vs" />
+    <None Include="Shaders\vertex.vs">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Shaders\fragment.fs">
+      <Filter>Pliki zasobów</Filter>
+    </None>
   </ItemGroup>
 </Project>
