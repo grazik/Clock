@@ -30,19 +30,19 @@ const path = require('path'),
     },
     saveData = (name, pathName, faces) => {
 	    const vertex_array = faces.reduce(function(prev, cur) {
-       		const v = cur.map(elem => elem[0]).join(',\n');
+       		const v = cur.map(elem => elem[0]).join(',\r\n');
         	return prev + ',\n' + v;
-    	},"").split('\n').filter(cur => cur.length>2).join('\n');
+    	},"").split('\n').filter(cur => cur.length>2).join('\r\n');
 
     	const vertex_normals_array = faces.reduce(function(prev, cur) {
-        	const v = cur.map(elem => elem[2]).join(',\n');
+        	const v = cur.map(elem => elem[2]).join(',\r\n');
         	return prev + ',\n' + v;
-    	},"").split('\n').filter(cur => cur.length>3).join('\n');
+    	},"").split('\n').filter(cur => cur.length>3).join('\r\n');
 
 	    const vertex_texture_array = faces.reduce(function(prev, cur) {
-        	const v = cur.map(elem => elem[1]).join(',\n');
+        	const v = cur.map(elem => elem[1]).join(',\r\n');
         	return prev + ',\n' + v;
-   		},"").split('\n').filter(cur => cur.length>3).join('\n');
+   		},"").split('\n').filter(cur => cur.length>3).join('\r\n');
 
 
     	const data = `#pragma once
