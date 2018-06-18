@@ -33,7 +33,7 @@ std::vector<Texture*> prepareTextures() {
 
 	textures.push_back(new Texture("Textures/gold.png"));
 	textures.push_back(new Texture("Textures/brushed-metal.png"));
-	textures.push_back(new Texture("Textures/clock.png"));
+	textures.push_back(new Texture("Textures/clockface.png"));
 	
 	return textures;
 }
