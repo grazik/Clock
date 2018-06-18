@@ -33,6 +33,7 @@ std::vector<Texture*> prepareTextures() {
 
 	textures.push_back(new Texture("Textures/gold.png"));
 	textures.push_back(new Texture("Textures/brushed-metal.png"));
+	textures.push_back(new Texture("Textures/clock.png"));
 	
 	return textures;
 }
@@ -42,7 +43,8 @@ std::vector<Model*> prepareModels(std::vector<Shader*> shaders, std::vector<Text
 
 	models.push_back(new Gear(shaders[0], textures[1], glm::vec3(0,0,-0.5f), 1.0f, 30.0f));
 	models.push_back(new Gear(shaders[0], textures[1], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f));
-	models.push_back(new Pendulum(shaders[0], textures[1], glm::vec3(-0.2, 0, 0), 30.0f));
+	models.push_back(new Pendulum(shaders[0], textures[1], glm::vec3(-0.2f, 0, 0), 30.0f));
+	models.push_back(new ClockFace(shaders[0], textures[2], glm::vec3(0.0f, 0, 0)));
 
 	return models;
 }
