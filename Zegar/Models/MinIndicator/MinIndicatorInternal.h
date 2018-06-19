@@ -1,8 +1,8 @@
 #pragma once
 		#include <string>
 		#include <sstream>
-		namespace MinIndicatorsInternal {
-		std::string name = "MinIndicators";
+		namespace MinIndicatorInternal {
+		std::string name = "MinIndicator";
 		int vertexCount = 1872;
 		float vertices[] = { -0.049317, -0.001150, -0.140103, 1.0f,
 -0.034506, -0.001150, -0.035569, 1.0f,

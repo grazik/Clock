@@ -1,8 +1,8 @@
 #pragma once
 		#include <string>
 		#include <sstream>
-		namespace HoursIndicatorsInternal {
-		std::string name = "HoursIndicators";
+		namespace HoursIndicatorInternal {
+		std::string name = "HoursIndicator";
 		int vertexCount = 1872;
 		float vertices[] = { -0.047676, -0.001112, -0.074056, 1.0f,
 -0.033357, -0.001112, -0.014857, 1.0f,

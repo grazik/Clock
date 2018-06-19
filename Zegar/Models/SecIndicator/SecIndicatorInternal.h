@@ -1,8 +1,8 @@
 #pragma once
 		#include <string>
 		#include <sstream>
-		namespace SecIndicatorsInternal {
-		std::string name = "SecIndicators";
+		namespace SecIndicatorInternal {
+		std::string name = "SecIndicator";
 		int vertexCount = 336;
 		float vertices[] = { 0.000000, 0.007622, -0.017503, 1.0f,
 0.000000, 0.007622, -0.005392, 1.0f,
