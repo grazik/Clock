@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #define GLEW_STATIC
+#include <map>
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
 #include <glm/glm.hpp>
@@ -20,29 +21,28 @@ float aspect = 1; //Stosunek szerokoœci do wysokoœci okna
 /*Shader* shaderProgram = config::defaultShader;*/ //WskaŸnik na obiekt reprezentuj¹cy program cieniuj¹cy.
 Camera* camera = new Camera(config::cameraX, config::cameraY, config::cameraZ);
 
-std::vector<Shader*> prepareShaders() {
-	std::vector<Shader*> shaders;
+std::map<std::string, Shader*> prepareShaders() {
+	std::map<std::string, Shader*> shaders;
 
-	shaders.push_back(new Shader("shaders/vertex.vs", "", "shaders/fragment.fs"));
+	shaders.insert(std::pair<std::string, Shader*>("default", new Shader("shaders/vertex.vs", "", "shaders/fragment.fs")));
 	
 	return shaders;
 }
 
-std::vector<Texture*> prepareTextures() {
-	std::vector<Texture*> textures;
+std::map<std::string, Texture*> prepareTextures() {
+	std::map<std::string, Texture*> textures;
 
-	textures.push_back(new Texture("Textures/gold.png"));
-	textures.push_back(new Texture("Textures/brushed-metal.png"));
+	textures.insert(std::pair<std::string, Texture*>("brushed metal", new Texture("Textures/brushed-metal.png")));
 	
 	return textures;
 }
 
-std::vector<Model*> prepareModels(std::vector<Shader*> shaders, std::vector<Texture*> textures) {
-	std::vector<Model*> models;
+std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shaders, std::map<std::string, Texture*> textures) {
+	std::map<std::string, Model*> models;
 
-	models.push_back(new Gear(shaders[0], textures[1], glm::vec3(0,0,-0.5f), 1.0f, 30.0f));
-	models.push_back(new Gear(shaders[0], textures[1], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f));
-	models.push_back(new Pendulum(shaders[0], textures[1], glm::vec3(-0.2, 0, 0), 30.0f));
+	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0,0,-0.5f), 1.0f, 30.0f)));
+	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f)));
+	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushed metal"], glm::vec3(-0.2, 0, 0), 30.0f)));
 
 	return models;
 }
@@ -91,17 +91,17 @@ void initOpenGLProgram(GLFWwindow* window) {
 }
 
 //Zwolnienie zasobów zajêtych przez program
-void freeOpenGLProgram(std::vector<Model*>& models, std::vector<Shader*>& shaders, std::vector<Texture*>& textures) {
-	for (int i = 0; i < models.size(); i++) {
-		delete models[i];
+void freeOpenGLProgram(std::map<std::string, Model*>& models, std::map<std::string, Shader*>& shaders, std::map<std::string, Texture*>& textures) {
+	for (std::map<std::string, Model*>::iterator it = models.begin(); it != models.end(); it++) {
+		delete it->second;
 	}
 
-	for (int i = 0; i < shaders.size(); i++) {
-		delete shaders[i];
+	for (std::map<std::string, Shader*>::iterator it = shaders.begin(); it != shaders.end(); it++) {
+		delete it->second;
 	}
 
-	for (int i = 0; i < textures.size(); i++) {
-		delete textures[i];
+	for (std::map<std::string, Texture*>::iterator it = textures.begin(); it != textures.end(); it++) {
+		delete it->second;
 	}
 
 	models.clear();
@@ -110,7 +110,7 @@ void freeOpenGLProgram(std::vector<Model*>& models, std::vector<Shader*>& shader
 }
 
 //Procedura rysuj¹ca zawartoœæ sceny
-void drawScene(GLFWwindow* window, std::vector<Model*>& models) {
+void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 	//************Tutaj umieszczaj kod rysuj¹cy obraz******************l
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Wykonaj czyszczenie bufora kolorów
@@ -123,14 +123,14 @@ void drawScene(GLFWwindow* window, std::vector<Model*>& models) {
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
 	if (glfwGetTime() >= 1) {
-		models[0]->updateAngle(5.0f);
-		models[1]->updateAngle(-5.0f);
-		models[2]->changeDirection();
+		models["Gear"]->updateAngle(5.0f);
+		models["BiggerGear"]->updateAngle(-5.0f);
+		models["Pendulum"]->changeDirection();
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	
-	for (int i = 0; i < models.size(); i++) {
-		models[i]->drawObject(P, V);
+	for (std::map<std::string, Model*>::iterator it = models.begin(); it != models.end(); it++) {
+		it->second->drawObject(P, V);
 	}
 
 	//Przerzuæ tylny bufor na przedni
@@ -138,9 +138,9 @@ void drawScene(GLFWwindow* window, std::vector<Model*>& models) {
 }
 
 int main(void) {
-	std::vector<Model*> models;
-	std::vector<Shader*> shaders;
-	std::vector<Texture*> textures;
+	std::map<std::string, Model*> models;
+	std::map<std::string, Shader*> shaders;
+	std::map<std::string, Texture*> textures;
 
 	GLFWwindow* window; //WskaŸnik na obiekt reprezentuj¹cy okno
 
