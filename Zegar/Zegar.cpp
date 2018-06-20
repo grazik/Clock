@@ -33,6 +33,7 @@ std::map<std::string, Texture*> prepareTextures() {
 	std::map<std::string, Texture*> textures;
 
 	textures.insert(std::pair<std::string, Texture*>("brushed metal", new Texture("Textures/brushed-metal.png")));
+	textures.insert(std::pair < std::string, Texture*>("black", new Texture("Textures/maxresdefault.png")));
 	
 	return textures;
 }
@@ -43,6 +44,9 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0,0,-0.5f), 1.0f, 30.0f)));
 	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f)));
 	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushed metal"], glm::vec3(-0.2, 0, 0), 30.0f)));
+	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
+	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
+	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
 
 	return models;
 }
@@ -83,11 +87,13 @@ void windowResize(GLFWwindow* window, int width, int height) {
 //Procedura inicjuj¹ca
 void initOpenGLProgram(GLFWwindow* window) {
 	//************Tutaj umieszczaj kod, który nale¿y wykonaæ raz, na pocz¹tku programu************
-	glClearColor(0, 0.05, 0.2, 1);
+	glClearColor(0.0f, 0.5f, 0.0f, 1);
 	glEnable(GL_DEPTH_TEST); //W³¹cz u¿ywanie Z-Bufora
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LINE_SMOOTH);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 //Zwolnienie zasobów zajêtych przez program
@@ -126,6 +132,9 @@ void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 		models["Gear"]->updateAngle(5.0f);
 		models["BiggerGear"]->updateAngle(-5.0f);
 		models["Pendulum"]->changeDirection();
+		models["HoursIndicator"]->updateAngle(float(360/(12*3600)));
+		models["SecIndicator"]->updateAngle(6.0f);
+		models["MinIndicator"]->updateAngle(0.1f);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	
