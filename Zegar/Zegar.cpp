@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cmath>
-#define GLEW_STATIC
 #include <map>
+#include <ctime>
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <glfw/glfw3.h>
 #include <glm/glm.hpp>
@@ -39,14 +40,21 @@ std::map<std::string, Texture*> prepareTextures() {
 }
 
 std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shaders, std::map<std::string, Texture*> textures) {
+	time_t theTime = time(NULL);
+	std::tm aTime{};
+	localtime_s(&aTime, &theTime);
+	int hours = aTime.tm_hour;
+	int minutes = aTime.tm_min;
+	int seconds = aTime.tm_sec;
+	std::cout << (hours % 12) * 30 << ' ' << minutes << ' ' << seconds << '\n';
 	std::map<std::string, Model*> models;
 
 	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0,0,-0.5f), 1.0f, 30.0f)));
 	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f)));
 	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushed metal"], glm::vec3(-0.2, 0, 0), 30.0f)));
-	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
-	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
-	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), 0.0f)));
+	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
+	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), minutes * 6 + seconds * 0.1 )));
+	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), seconds * 6)));
 
 	return models;
 }
@@ -132,7 +140,7 @@ void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 		models["Gear"]->updateAngle(5.0f);
 		models["BiggerGear"]->updateAngle(-5.0f);
 		models["Pendulum"]->changeDirection();
-		models["HoursIndicator"]->updateAngle(float(360/(12*3600)));
+		models["HoursIndicator"]->updateAngle(1/float(120));
 		models["SecIndicator"]->updateAngle(6.0f);
 		models["MinIndicator"]->updateAngle(0.1f);
 		glfwSetTime(0); //Wyzeruj licznik czasu
