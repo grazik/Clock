@@ -46,7 +46,6 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	int hours = aTime.tm_hour;
 	int minutes = aTime.tm_min;
 	int seconds = aTime.tm_sec;
-	std::cout << (hours % 12) * 30 << ' ' << minutes << ' ' << seconds << '\n';
 	std::map<std::string, Model*> models;
 
 	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushed metal"], glm::vec3(0,0,-0.5f), 1.0f, 30.0f)));
