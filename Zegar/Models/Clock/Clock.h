@@ -4,7 +4,7 @@
 
 class Clock : public Model {
 public:
-	Clock(Shader* shader, Texture* tex, glm::vec3 pos, float deg);
+	Clock(Shader* shader, Texture* tex, glm::vec3 pos);
 	~Clock();
 
 	GLuint getVao() { return vao; }
