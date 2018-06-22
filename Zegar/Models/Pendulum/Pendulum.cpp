@@ -1,36 +1,48 @@
-#include "Models/Gear/Gear.h"
-#include "Models/Gear/GearInternal.h"
+#include "Models/Pendulum/Pendulum.h"
+#include "Models/Pendulum/PendulumInternal.h"
 
-Gear::Gear(Shader* shader, Texture* tex, glm::vec3 pos, float size, float deg) {
-	setName(GearInternal::name);
-	setVertices(GearInternal::vertices);
-	setVertexNormals(GearInternal::vertexNormals);
-	setTexCoords(GearInternal::texCoords);
-	setVertexCount(GearInternal::vertexCount);
+Pendulum::Pendulum(Shader* shader, Texture* tex, glm::vec3 pos, float deg) {
+	setName(PendulumInternal::name);
+	setVertices(PendulumInternal::vertices);
+	setVertexNormals(PendulumInternal::vertexNormals);
+	setTexCoords(PendulumInternal::texCoords);
+	setVertexCount(PendulumInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
 	texture = tex;
 	angle = deg;
-	scale = size;
 	prepareObject();
+	direction = 0;
 }
 
-Gear::~Gear() {
+Pendulum::~Pendulum() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
 	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
 }
 
-void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
+void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
-	mM = glm::scale(mM, glm::vec3(scale, scale, scale));
-	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(1, 0, 0));
-	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
-	mM = glm::rotate(mM, 3.14f * getAngle() / 180, glm::vec3(0, 1, 0));
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 1, 0));
+	glm::quat rotateLeft = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * getAngle() / 180, glm::vec3(0, 0, 1)));
+	glm::quat rotateRight = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * -getAngle() / 180, glm::vec3(0, 0, 1)));
+
+	float factor = glfwGetTime();
+	if (factor > 1) {
+		factor = 1;
+	}
+
+	if (direction) {
+		factor = 1 - factor;
+	}
+	
+	
+	glm::mat4 rotate = glm::mat4_cast(glm::mix(rotateLeft, rotateRight, factor));
+	mM = mM * rotate;
 	
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
@@ -64,7 +76,7 @@ void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glBindVertexArray(0);
 }
 
-void Gear::prepareObject() {
+void Pendulum::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków

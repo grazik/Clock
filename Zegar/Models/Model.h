@@ -12,12 +12,10 @@ class Model {
 		float* getVertices() { return vertices; }
 		float* getVertexNormals() { return vertexNormals; }
 		float* getTexCoords() { return texCoords; }
-		std::string getTexName() { return texName; }
 		std::string getName() { return name; }
 		Shader* getShader() { return shader; }
 		glm::vec3 getPosition() { return position; }
 
-		void setTextName(std::string name) { texName = name; }
 		void setName(std::string newName) { name = newName; }
 		void setVertexCount(int vertexNumber) { vertexCount = vertexNumber; }
 		void setVertices(float* verticesArray) { vertices = verticesArray; }
@@ -29,9 +27,9 @@ class Model {
 		virtual void drawObject(glm::mat4 mP, glm::mat4 mV) = 0;
 		virtual void prepareObject() = 0;
 		virtual void updateAngle(float newAngle) {};
+		virtual void changeDirection() {};
 
 	private:
-		std::string texName;
 		std::string name;
 		int vertexCount;
 		float* vertices;
