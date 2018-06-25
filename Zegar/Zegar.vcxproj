@@ -32,6 +32,7 @@
     <ClInclude Include="Models\Clock\ClockInternal.h" />
     <ClInclude Include="Models\Gear\Gear.h" />
     <ClInclude Include="Models\Gear\GearInternal.h" />
+    <ClInclude Include="Models\Glass\GlassInternal.h" />
     <ClInclude Include="Models\HoursIndicator\HoursIndicator.h" />
     <ClInclude Include="Models\HoursIndicator\HoursIndicatorInternal.h" />
     <ClInclude Include="Models\MinIndicator\MinIndicator.h" />
