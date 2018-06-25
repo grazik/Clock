@@ -7,3 +7,4 @@
 #include "Models/HoursIndicator/HoursIndicator.h"
 #include "Models/SecIndicator/SecIndicator.h"
 #include "Models/MinIndicator/MinIndicator.h"
+#include "Models/Lamp/Lamp.h"
