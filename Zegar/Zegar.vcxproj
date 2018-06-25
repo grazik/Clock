@@ -26,6 +26,8 @@
     <ClInclude Include="Classes\headers\Texture.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
+    <ClInclude Include="Models\ClockFace\ClockFace.h" />
+    <ClInclude Include="Models\ClockFace\ClockFaceInternal.h" />
     <ClInclude Include="Models\Gear\Gear.h" />
     <ClInclude Include="Models\Gear\GearInternal.h" />
     <ClInclude Include="Models\HoursIndicator\HoursIndicator.h" />
@@ -44,6 +46,7 @@
     <ClCompile Include="Classes\sources\Shader.cpp" />
     <ClCompile Include="Classes\sources\Texture.cpp" />
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="Models\ClockFace\ClockFace.cpp" />
     <ClCompile Include="Models\Gear\Gear.cpp" />
     <ClCompile Include="Models\HoursIndicator\HoursIndicator.cpp" />
     <ClCompile Include="Models\MinIndicator\MinIndicator.cpp" />
