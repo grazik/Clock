@@ -1,49 +1,37 @@
-#include "Models/Pendulum/Pendulum.h"
-#include "Models/Pendulum/PendulumInternal.h"
+#include "Models/SecIndicator/SecIndicator.h"
+#include "Models/SecIndicator/SecIndicatorInternal.h"
 
-Pendulum::Pendulum(Shader* shader, Texture* tex, glm::vec3 pos, float deg) {
-	setName(PendulumInternal::name);
-	setVertices(PendulumInternal::vertices);
-	setVertexNormals(PendulumInternal::vertexNormals);
-	setTexCoords(PendulumInternal::texCoords);
-	setVertexCount(PendulumInternal::vertexCount);
+SecIndicator::SecIndicator(Shader* shader, Texture* tex, glm::vec3 pos, float deg) {
+	setName(SecIndicatorInternal::name);
+	setVertices(SecIndicatorInternal::vertices);
+	setVertexNormals(SecIndicatorInternal::vertexNormals);
+	setTexCoords(SecIndicatorInternal::texCoords);
+	setVertexCount(SecIndicatorInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
 	texture = tex;
 	angle = deg;
-	direction = 0;
 	prepareObject();
 }
 
-Pendulum::~Pendulum() {
+SecIndicator::~SecIndicator() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
 	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
 }
 
-void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
+void SecIndicator::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
-	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 1, 0));
-	glm::quat rotateLeft = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * getAngle() / 180, glm::vec3(0, 0, 1)));
-	glm::quat rotateRight = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * -getAngle() / 180, glm::vec3(0, 0, 1)));
+	glm::mat4 rotZ = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	glm::mat4 rotY = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(0, 1, 0));
+	glm::mat4 rotX = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(1, 0, 0));
+	glm::mat4 rotAngle = glm::rotate(glm::mat4(1.0f), 3.14f * angle / 180, glm::vec3(1, 0, 0));
 
-	float factor = glfwGetTime();
-	if (factor > 1) {
-		factor = 1;
-	}
-
-	if (direction) {
-		factor = 1 - factor;
-	}
-	
-	
-	glm::mat4 rotate = glm::mat4_cast(glm::mix(rotateLeft, rotateRight, factor));
-	mM = mM * rotate;
-	
+	mM = mM * rotAngle * rotX * rotZ;
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
@@ -76,14 +64,14 @@ void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glBindVertexArray(0);
 }
 
-void Pendulum::prepareObject() {
+void SecIndicator::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
 	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
 
 
-																			   //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
+	//Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
 
 	glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
