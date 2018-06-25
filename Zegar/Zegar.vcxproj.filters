@@ -51,6 +51,18 @@
     <ClInclude Include="Models\Pendulum\PendulumInternal.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Models\HoursIndicator\HoursIndicator.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\HoursIndicator\HoursIndicatorInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\MinIndicator\MinIndicator.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\SecIndicator\SecIndicator.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
     <ClInclude Include="Models\ClockFace\ClockFace.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -87,6 +99,15 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Models\Pendulum\Pendulum.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\HoursIndicator\HoursIndicator.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\MinIndicator\MinIndicator.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\SecIndicator\SecIndicator.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Models\ClockFace\ClockFace.cpp">
