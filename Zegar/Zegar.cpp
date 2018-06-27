@@ -58,8 +58,8 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
 	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), minutes * 6 + seconds * 0.1 )));
 	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), seconds * 6)));
-	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["bird"], glm::vec3(0, 0.0f, 0))));
-	//models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(0, 2, 0))));
+	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["brushedMetal"], glm::vec3(0, 0.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(-2, 3, 0))));
 
 	return models;
 }
