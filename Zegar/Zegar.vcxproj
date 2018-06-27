@@ -26,6 +26,7 @@
     <ClInclude Include="Classes\headers\Texture.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
+    <ClInclude Include="Models\Bird\Bird.h" />
     <ClInclude Include="Models\ClockFace\ClockFace.h" />
     <ClInclude Include="Models\ClockFace\ClockFaceInternal.h" />
     <ClInclude Include="Models\Clock\Clock.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Classes\sources\Shader.cpp" />
     <ClCompile Include="Classes\sources\Texture.cpp" />
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="Models\Bird\Bird.cpp" />
     <ClCompile Include="Models\ClockFace\ClockFace.cpp" />
     <ClCompile Include="Models\Clock\Clock.cpp" />
     <ClCompile Include="Models\Gear\Gear.cpp" />
