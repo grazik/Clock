@@ -36,6 +36,7 @@ std::map<std::string, Texture*> prepareTextures() {
 	textures.insert(std::pair<std::string, Texture*>("brushedMetal", new Texture("Textures/brushed-metal.png")));
 	textures.insert(std::pair < std::string, Texture*>("black", new Texture("Textures/maxresdefault.png")));
 	textures.insert(std::pair < std::string, Texture*>("clockFace", new Texture("Textures/clockface.png")));
+	textures.insert(std::pair < std::string, Texture*>("clock", new Texture("Textures/zegar.png")));
 	
 	return textures;
 }
@@ -56,7 +57,7 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
 	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), minutes * 6 + seconds * 0.1 )));
 	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), seconds * 6)));
-	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["brushedMetal"], glm::vec3(0, -1.1f, 0))));
+	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["clock"], glm::vec3(0, -1.1f, 0))));
 
 	return models;
 }
@@ -102,6 +103,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_CULL_FACE);
 }
 
 //Zwolnienie zasobów zajêtych przez program
