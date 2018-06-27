@@ -26,8 +26,13 @@ class Model {
 
 		virtual void drawObject(glm::mat4 mP, glm::mat4 mV) = 0;
 		virtual void prepareObject() = 0;
-		virtual void updateAngle(float newAngle) {};
-		virtual void changeDirection() {};
+
+		virtual void updateAngle(float newAngle) {}
+		virtual void changeDirection() {}
+		virtual bool getStatusOperate() { return false; }
+		virtual bool getStastus() { return false; }
+		virtual void changeOperate() {}
+		virtual void changeOpen() {}
 
 	private:
 		std::string name;

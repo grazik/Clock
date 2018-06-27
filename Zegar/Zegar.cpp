@@ -22,6 +22,8 @@ float aspect = 1; //Stosunek szerokoúci do wysokoúci okna
 /*Shader* shaderProgram = config::defaultShader;*/ //Wskaünik na obiekt reprezentujπcy program cieniujπcy.
 Camera* camera = new Camera(config::cameraX, config::cameraY, config::cameraZ);
 
+bool doorOperate = false;
+
 std::map<std::string, Shader*> prepareShaders() {
 	std::map<std::string, Shader*> shaders;
 
@@ -60,8 +62,8 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), seconds * 6)));
 	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["clock"], glm::vec3(0, 0.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(-0.5, 4.2f, 0.1))));
-	models.insert(std::pair<std::string, Model*>("DoorLeft", new Clockdoorleft(shaders["default"], textures["brushedMetal"], glm::vec3(-0.9f, 4.2f, -0.3))));
-	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["black"], glm::vec3(-0.9f, 4.2f, 0.4))));
+	models.insert(std::pair<std::string, Model*>("DoorLeft", new Clockdoorleft(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, -0.3))));
+	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, 0.4))));
 
 	return models;
 }
@@ -84,6 +86,9 @@ void key_callback(GLFWwindow* window, int key,
 		if (key == GLFW_KEY_DOWN) {
 			camera->updateMoveAngle(-config::cameraMoveAngleChange);
 			camera->updatePostion(-cos(3.14f * camera->getRotationAngle() / 180), -config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), -sin(3.14f * camera->getRotationAngle() / 180));
+		}
+		if (key == GLFW_KEY_A && !doorOperate) {
+			doorOperate = true;
 		}
 	}
 }
@@ -149,6 +154,22 @@ void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 		models["HoursIndicator"]->updateAngle(1/float(120));
 		models["SecIndicator"]->updateAngle(6.0f);
 		models["MinIndicator"]->updateAngle(0.1f);
+		if (models["DoorRight"]->getStatusOperate()) {
+			models["DoorRight"]->changeOperate();
+			models["DoorLeft"]->changeOperate();
+		}
+
+		if (doorOperate) {
+			doorOperate = false;
+			std::cout << "change\n";
+			if (!models["DoorRight"]->getStatusOperate() && !models["DoorRight"]->getStastus()) {
+				std::cout << "TATATAT";
+				models["DoorRight"]->changeOpen();
+				models["DoorLeft"]->changeOpen();
+				models["DoorRight"]->changeOperate();
+				models["DoorLeft"]->changeOperate();
+			}
+		}
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	

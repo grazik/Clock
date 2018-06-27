@@ -12,9 +12,15 @@ public:
 	GLuint getBufNormals() { return bufNormals; }
 	GLuint getBufTexCoords() { return bufTexCoords; }
 	Texture* getTexture() { return texture; }
+	bool getOpen() { return open; }
 
 	void drawObject(glm::mat4 mP, glm::mat4 mV);
 	void prepareObject();
+	
+	bool getStatusOperate() { return doorOperate; }
+	bool getStastus() { return open; }
+	void changeOperate() { doorOperate = !doorOperate; }
+	void changeOpen() { open = !open; }
 
 private:
 	GLuint vao;
@@ -22,5 +28,6 @@ private:
 	GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 	GLuint bufTexCoords;
 	Texture* texture;
-
+	bool open; // true open - false close
+	bool doorOperate; // true perform false dont
 };

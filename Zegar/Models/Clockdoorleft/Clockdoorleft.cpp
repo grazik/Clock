@@ -10,6 +10,8 @@ Clockdoorleft::Clockdoorleft(Shader* shader, Texture* tex, glm::vec3 pos) {
 	setShader(shader);
 	setPostiotion(pos);
 	texture = tex;
+	open = false;
+	doorOperate = false;
 	prepareObject();
 }
 
@@ -25,8 +27,33 @@ void Clockdoorleft::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
-	glm::mat4 rotateY = glm::rotate(glm::mat4(1.0f), 3.14f * 270 / 180, glm::vec3(0, 1, 0));
-	mM = mM * rotateY;
+
+
+	glm::quat close = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * 0 / 180, glm::vec3(0, 1, 0)));  //0 - 180
+	glm::quat open = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * 180 / 180, glm::vec3(0, 1, 0)));  //0 - 180
+	glm::mat4 rotate;
+
+	float factor = glfwGetTime();
+	if (factor > 1) {
+		factor = 1;
+	}
+
+	if (doorOperate) {
+		if (!getOpen()) {
+			factor = 1 - factor;
+		}
+		rotate = glm::mat4_cast(glm::mix(close, open, factor));
+	}
+	else {
+		if (getOpen()) {
+			rotate = glm::mat4_cast(open);
+		}
+		else {
+			rotate = glm::mat4_cast(close);
+		}
+	}
+
+	mM = mM * rotate;
 
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
