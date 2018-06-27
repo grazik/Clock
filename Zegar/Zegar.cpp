@@ -51,7 +51,7 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	int seconds = aTime.tm_sec;
 	std::map<std::string, Model*> models;
 
-	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, -0.5f), 1.0f, 60.0f)));
+	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, -0.5f), 1.0f, 30.0f)));
 	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, 0.5f), 1.2f, 0.0f)));
 	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushedMetal"], glm::vec3(0.2f, 2.8f, 0), 30.0f)));
 	models.insert(std::pair<std::string, Model*>("ClockFace", new ClockFace(shaders["default"], textures["clockFace"], glm::vec3(-1.0f, 5.5f, 0))));
