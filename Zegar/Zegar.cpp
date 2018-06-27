@@ -51,8 +51,8 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	int seconds = aTime.tm_sec;
 	std::map<std::string, Model*> models;
 
-	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f,-0.5f), 1.0f, 30.0f)));
-	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, 0.5), 1.2f, 0.0f)));
+	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, -0.5f), 1.0f, 60.0f)));
+	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, 0.5f), 1.2f, 0.0f)));
 	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushedMetal"], glm::vec3(0.2f, 2.8f, 0), 30.0f)));
 	models.insert(std::pair<std::string, Model*>("ClockFace", new ClockFace(shaders["default"], textures["clockFace"], glm::vec3(-1.0f, 5.5f, 0))));
 	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
@@ -60,6 +60,8 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), seconds * 6)));
 	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["clock"], glm::vec3(0, 0.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(-0.5, 4.2f, 0.1))));
+	models.insert(std::pair<std::string, Model*>("DoorLeft", new Clockdoorleft(shaders["default"], textures["brushedMetal"], glm::vec3(-0.9f, 4.2f, -0.3))));
+	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["black"], glm::vec3(-0.9f, 4.2f, 0.4))));
 
 	return models;
 }

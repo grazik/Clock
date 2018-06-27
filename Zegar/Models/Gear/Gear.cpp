@@ -28,10 +28,9 @@ void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
 	mM = glm::scale(mM, glm::vec3(scale, scale, scale));
-	glm::mat4 rotateZ = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(0, 0, 1));
-	glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), 3.14f * getAngle() / 180, glm::vec3(1, 0, 0));
-
-	mM = mM * rotate * rotateZ;
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(1, 0, 0));
+	mM = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	mM = glm::rotate(mM, 3.14f * getAngle() / 180, glm::vec3(0, 1, 0));
 	
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
