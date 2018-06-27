@@ -8,3 +8,4 @@
 #include "Models/SecIndicator/SecIndicator.h"
 #include "Models/MinIndicator/MinIndicator.h"
 #include "Models/Clock/Clock.h"
+#include "Models/Bird/Bird.h"

@@ -1,38 +1,33 @@
-#include "Models/Gear/Gear.h"
-#include "Models/Gear/GearInternal.h"
+#include "Models/Bird/Bird.h"
+#include "Models/Bird/BirdInternal.h"
 
-Gear::Gear(Shader* shader, Texture* tex, glm::vec3 pos, float size, float deg) {
-	setName(GearInternal::name);
-	setVertices(GearInternal::vertices);
-	setVertexNormals(GearInternal::vertexNormals);
-	setTexCoords(GearInternal::texCoords);
-	setVertexCount(GearInternal::vertexCount);
+Bird::Bird(Shader* shader, Texture* tex, glm::vec3 pos) {
+	setName(BirdInternal::name);
+	setVertices(BirdInternal::vertices);
+	setVertexNormals(BirdInternal::vertexNormals);
+	setTexCoords(BirdInternal::texCoords);
+	setVertexCount(BirdInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
 	texture = tex;
-	angle = deg;
-	scale = size;
 	prepareObject();
 }
 
-Gear::~Gear() {
+Bird::~Bird() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
 	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
 }
 
-void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
+void Bird::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
-	mM = glm::scale(mM, glm::vec3(scale, scale, scale));
-	glm::mat4 rotateZ = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(0, 0, 1));
-	glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), 3.14f * getAngle() / 180, glm::vec3(1, 0, 0));
+	glm::mat4 rotateZ = glm::rotate(mM, 3.14f * 90 / 180, glm::vec3(0, 0, 1));
+	mM = mM * rotateZ;
 
-	mM = mM * rotate * rotateZ;
-	
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
@@ -65,14 +60,14 @@ void Gear::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glBindVertexArray(0);
 }
 
-void Gear::prepareObject() {
+void Bird::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
 	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
 
 
-																			   //Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
+	//Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
 
 	glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
