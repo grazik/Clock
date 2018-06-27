@@ -1,27 +1,29 @@
-#include "Models/Lamp/Lamp.h"
-#include "Models/Lamp/LampInternal.h"
+#pragma once
+#include "Models/Bulb/Bulb.h"
+#include "Models/Bulb/BulbInternal.h"
 
-Lamp::Lamp(Shader* shader, Shader* lShader, Texture* tex, glm::vec3 pos) {
-	setName(LampInternal::name);
-	setVertices(LampInternal::vertices);
-	setVertexNormals(LampInternal::vertexNormals);
-	setTexCoords(LampInternal::texCoords);
-	setVertexCount(LampInternal::vertexCount);
+Bulb::Bulb(Shader* shader, glm::vec3 pos) {
+	setName(BulbInternal::name);
+	setVertices(BulbInternal::vertices);
+	setVertexNormals(BulbInternal::vertexNormals);
+	setVertexCount(BulbInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
-	texture = tex;
-	lightShader = lShader;
 	prepareObject();
 }
 
-Lamp::~Lamp() {
+Bulb::~Bulb() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
-	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
 }
 
-void Lamp::drawObject(glm::mat4 mP, glm::mat4 mV) {
+void Bulb::drawObject(glm::mat4 mP, glm::mat4 mV) {
+	//Wylicz macierz modelu rysowanego obiektu
+
+	glm::mat4 mM = glm::mat4(1.0f);
+	mM = glm::translate(mM, getPosition());
+	mM = glm::scale(mM, glm::vec3(20.0f));
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
@@ -38,11 +40,7 @@ void Lamp::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Pozosta³e polecenia dzia³aj¹ podobnie.
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
-	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(modelMatrix));
-	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
+	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
 
 	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
 	glBindVertexArray(vao);
@@ -52,26 +50,12 @@ void Lamp::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 	//Posprz¹tanie po sobie (niekonieczne w sumie je¿eli korzystamy z VAO dla ka¿dego rysowanego obiektu)
 	glBindVertexArray(0);
-
-	for (int i = 0; i < bulbs.size(); i++) {
-		bulbs[i]->drawObject(mP, mV);
-	}
 }
 
-void Lamp::prepareLights() {
-	glm::mat4 mM = glm::mat4(1.0f);
-	glm::vec4 pos = glm::vec4(0.16f, -5, 3.0f, 1);
-	pos = modelMatrix * mM * pos;
-	
-	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos)));
-}
-
-void Lamp::prepareObject() {
+void Bulb::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
-	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
-
 
 	//Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
@@ -80,16 +64,6 @@ void Lamp::prepareObject() {
 
 	Graphics::assignVBOtoAttribute(getShader(), "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
-	Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
 
 	glBindVertexArray(0); //Dezaktywuj VAO
-
-
-	glm::mat4 mM = glm::mat4(1.0f);
-	mM = glm::translate(mM, getPosition());
-	glm::mat4 rotX = glm::rotate(glm::mat4(1.0f), 3.14f * 270 / 180, glm::vec3(0, 0, 1));
-
-	mM = mM;
-	modelMatrix = mM;
-	prepareLights();
 }

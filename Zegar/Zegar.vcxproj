@@ -26,6 +26,8 @@
     <ClInclude Include="Classes\headers\Texture.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
+    <ClInclude Include="Models\Bulb\Bulb.h" />
+    <ClInclude Include="Models\Bulb\BulbInternal.h" />
     <ClInclude Include="Models\ClockFace\ClockFace.h" />
     <ClInclude Include="Models\ClockFace\ClockFaceInternal.h" />
     <ClInclude Include="Models\Gear\Gear.h" />
@@ -48,6 +50,7 @@
     <ClCompile Include="Classes\sources\Shader.cpp" />
     <ClCompile Include="Classes\sources\Texture.cpp" />
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="Models\Bulb\Bulb.cpp" />
     <ClCompile Include="Models\ClockFace\ClockFace.cpp" />
     <ClCompile Include="Models\Gear\Gear.cpp" />
     <ClCompile Include="Models\HoursIndicator\HoursIndicator.cpp" />
@@ -59,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.fs" />
+    <None Include="Shaders\lightFragment.fs" />
+    <None Include="Shaders\lightVertex.vs" />
     <None Include="Shaders\vertex.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
