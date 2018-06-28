@@ -75,7 +75,7 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("Chair", new Chair(shaders["default"], textures["woodentable"], glm::vec3(-2.0f, 0.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Table", new Table(shaders["default"], textures["woodentable"], glm::vec3(0.0f, 0.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Wardrobe", new Wardrobe(shaders["default"], textures["woodentable"], glm::vec3(0.0f, 0.0f, 0))));
-	models.insert(std::pair<std::string, Model*>("Carpet", new Carpet(shaders["fur"], textures["tiger"], textures["fur"], glm::vec3(0.0f, 0.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Carpet", new Carpet(shaders["fur"], textures["fur"], textures["tiger"], glm::vec3(0.0f, 0.0f, 0))));
 
 	return models;
 }

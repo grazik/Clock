@@ -23,9 +23,9 @@ out vec2 iTexCoord0; //wspolrzedne teksturowania
 out float layer; //aktualna warstwa
 
 void main(void) {
-    vec4 lp=vec4(0,0,-6,1); //Wspolrzedne swiatla w przestrzeni swiata
+    vec4 lp=vec4(0,0,-6,1); //Wspolrzedne swiatla w przestrzeni OKA
 
-    l=normalize(V*lp-V*M*vertex); //Wektor do swiatla w przestrzeni oka
+    l=normalize(lp-V*M*vertex); //Wektor do swiatla w przestrzeni oka
     n=normalize(V*M*normal); //Wektor normalny w wierzcholku w przestrzeni oka
     v=normalize(vec4(0,0,0,1)-V*M*vertex); //Wektor do obserwatora w przestrzeni oka
 

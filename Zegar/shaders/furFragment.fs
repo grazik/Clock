@@ -30,7 +30,7 @@ void main(void) {
     float rv=pow(max(dot(mr,mv),0),10); //Kosinus kata pomiedzy wektorami odbitym i do obserwatora do potegi 10
 
 	vec4 fur=texture(textureMap0,iTexCoord0); //futro (jest wlos?)
-v	ec4 furCol=texture(textureMap1,iTexCoord0); //kolor futra
+	vec4 furCol=texture(textureMap1,iTexCoord0); //kolor futra
 	vec4 col=furCol;                          //domyœlny kolor
 	//Je¿eli nie pierwsza warstwa to dodaj alfa z teks. futra
 	if (layer!=0) col=vec4(furCol.rgb,fur.a);

@@ -49,16 +49,21 @@ void Carpet::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
+	glUniform1f(getShader()->getUniformLocation("maxFurLength"), 0.1);
+	glUniform1f(getShader()->getUniformLocation("maxLayer"), 100);
 	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
+	glUniform1i(getShader()->getUniformLocation("textureMap1"), 1);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
+	glBindTexture(GL_TEXTURE_2D, textures[0]->getHandler());
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textures[1]->getHandler());
 
 	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
 	glBindVertexArray(vao);
 
 	//Narysowanie obiektu
-	glDrawArrays(GL_TRIANGLES, 0, static_cast<unsigned int>(getVertexCount()));
+	glDrawArraysInstanced(GL_TRIANGLES, 0, static_cast<unsigned int>(getVertexCount()),100);
 
 	//Posprz¹tanie po sobie (niekonieczne w sumie je¿eli korzystamy z VAO dla ka¿dego rysowanego obiektu)
 	glBindVertexArray(0);
