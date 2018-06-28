@@ -66,9 +66,15 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(-0.5, 4.2f, 0.1))));
 	models.insert(std::pair<std::string, Model*>("DoorLeft", new Clockdoorleft(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, -0.3))));
 	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, 0.4))));
-	models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], shaders["light"], textures["brushedMetal"], glm::vec3(0.0f, 5.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], shaders["light"], textures["brushedMetal"], glm::vec3(0.0f, 15.0f, 0))));
 
 	return models;
+}
+
+void updateShaders(std::map<std::string, Shader*> shaders, Lamp* lamp) {
+	for (std::map<std::string, Shader*>::iterator it = shaders.begin(); it != shaders.end(); it++) {
+		it->second->setLights(lamp->lightPosition());
+	}
 }
 
 //Procedura obs³ugi b³êdów
@@ -108,7 +114,7 @@ void operateDoors(std::map<std::string, Model*>& models) {
 		else {
 			models["Bird"]->changeDirection();
 		}
-	}*
+	}
 }
 
 //Procedura obs³ugi klawiatury
@@ -238,6 +244,8 @@ int main(void) {
 	shaders = prepareShaders();
 	textures = prepareTextures();
 	models = prepareModels(shaders, textures);
+
+	updateShaders(shaders, dynamic_cast<Lamp*>(models["Lamp"]));
 
 	glfwSetTime(0); //Wyzeruj licznik czasu
 

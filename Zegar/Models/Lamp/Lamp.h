@@ -15,6 +15,7 @@ public:
 	GLuint getBufTexCoords() { return bufTexCoords; }
 	Texture* getTexture() { return texture; }
 	glm::mat4 getModelMatrix() { return modelMatrix; }
+	std::vector<glm::vec3> lightPosition();
 
 	void prepareObject();
 	void prepareLights();

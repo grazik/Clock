@@ -23,7 +23,7 @@ void Bulb::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 	glm::mat4 mM = glm::mat4(1.0f);
 	mM = glm::translate(mM, getPosition());
-	mM = glm::scale(mM, glm::vec3(20.0f));
+	mM = glm::scale(mM, glm::vec3(5.0f));
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,

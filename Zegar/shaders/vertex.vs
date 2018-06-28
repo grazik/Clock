@@ -1,31 +1,39 @@
 #version 330
 
-//Zmienne jednorodne
+// jednorodne
 uniform mat4 P;
 uniform mat4 V;
 uniform mat4 M;
 
+struct DirectionalLight {
+	vec3 direction;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
 
 //Atrybuty
-in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
-in vec4 color;  //kolor wierzcholka (na razie ignorowany)
-in vec4 normal; //wektor normalny w wierzcholku w przestrzeni modelu
-in vec2 texCoord0; //wspolrzedne teksturowania
+in vec4 vertex;
+in vec4 normal;
+in vec2 texture;
+
+uniform DirectionalLight directionalLight;
 
 //Zmienne interpolowane
-out vec4 l; //wektor Do swiatla w przestrzeni oka
-out vec4 n; //wektor normalny w przestrzeni oka
-out vec4 v; //wektor Do obserwatora w przestrzeni oka
-out vec2 iTexCoord0; //wspolrzedne teksturowania
+out vec4 n;
+out vec4 v;
+out vec4 d;
+out vec2 texCoord;
 
-void main(void) {
-    vec4 lp = vec4(1, 0, 0, 1); //Wspolrzedne swiatla w przestrzeni OKA
+void main()	{
+	texCoord = texture;
+	n = normalize(V*M*normal);
+	v = normalize(vec4(0,0,0,1) - V*M*vertex);
+	
+	// directional
+	d = normalize(V*vec4(directionalLight.direction,0));
 
-    l = normalize(lp - V * M * vertex); //Wektor Do swiatla w przestrzeni oka
-    n = normalize(V * M * normal); //Wektor normalny w wierzcholku w przestrzeni oka
-    v = normalize(vec4(0, 0, 0, 1) - V * M * vertex); //Wektor Do obserwatora w przestrzeni oka
-
-    iTexCoord0 = texCoord0; //Zapewnij interpolacje wspolrzednych teksturowania
-
-	gl_Position = P * V * M * vertex;
+	gl_Position = P*V*M*vertex;
 }
+
+
