@@ -72,10 +72,10 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, 0.4))));
 	//models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], textures["gold"], glm::vec3(0.0f, 2.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Backstage", new Backstage(shaders["default"], textures["backstage"], glm::vec3(0.0f, 0.0f, 0)))); 
-	models.insert(std::pair<std::string, Model*>("Chair", new Chair(shaders["default"], textures["woodentable"], glm::vec3(-2.0f, 0.0f, 0))));
-	models.insert(std::pair<std::string, Model*>("Table", new Table(shaders["default"], textures["woodentable"], glm::vec3(0.0f, 0.0f, 0))));
-	models.insert(std::pair<std::string, Model*>("Wardrobe", new Wardrobe(shaders["default"], textures["woodentable"], glm::vec3(0.0f, 0.0f, 0))));
-	models.insert(std::pair<std::string, Model*>("Carpet", new Carpet(shaders["fur"], textures["fur"], textures["tiger"], glm::vec3(0.0f, 0.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Chair", new Chair(shaders["default"], textures["woodentable"], glm::vec3(-10.0f, 0.0f, 16.5))));
+	models.insert(std::pair<std::string, Model*>("Table", new Table(shaders["default"], textures["woodentable"], glm::vec3(-12.0f, 0.0f, 20.5))));
+	models.insert(std::pair<std::string, Model*>("Wardrobe", new Wardrobe(shaders["default"], textures["woodentable"], glm::vec3(7.5f, 0.0f, 26.2))));
+	models.insert(std::pair<std::string, Model*>("Carpet", new Carpet(shaders["fur"], textures["tiger"], textures["fur"], glm::vec3(0.0f, 0.0f, 0))));
 
 	return models;
 }
