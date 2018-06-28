@@ -14,3 +14,8 @@
 #include "Models/MinIndicator/MinIndicator.h"
 #include "Models/Lamp/Lamp.h"
 #include "Models/Backstage/Backstage.h"
+#include "Models/Chair/Chair.h"
+#include "Models/Table/Table.h"
+#include "Models/Wardrobe/Wardrobe.h"
+#include "Models/Carpet/Carpet.h"
+

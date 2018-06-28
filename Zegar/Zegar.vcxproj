@@ -27,6 +27,10 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="Models\AllModels.h" />
     <ClInclude Include="Models\Bird\Bird.h" />
+    <ClInclude Include="Models\Carpet\Carpet.h" />
+    <ClInclude Include="Models\Carpet\CarpetInternal.h" />
+    <ClInclude Include="Models\Chair\Chair.h" />
+    <ClInclude Include="Models\Chair\ChairInternal.h" />
     <ClInclude Include="Models\Clockdoorleft\Clockdoorleft.h" />
     <ClInclude Include="Models\Clockdoorleft\ClockdoorleftInternal.h" />
     <ClInclude Include="Models\Clockdoor\Clockdoor.h" />
@@ -49,6 +53,10 @@
     <ClInclude Include="Models\Pendulum\Pendulum.h" />
     <ClInclude Include="Models\Pendulum\PendulumInternal.h" />
     <ClInclude Include="Models\SecIndicator\SecIndicator.h" />
+    <ClInclude Include="Models\Table\Table.h" />
+    <ClInclude Include="Models\Table\TableInternal.h" />
+    <ClInclude Include="Models\Wardrobe\Wardrobe.h" />
+    <ClInclude Include="Models\Wardrobe\WardrobeInternal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\sources\Camera.cpp" />
@@ -59,6 +67,8 @@
     <ClCompile Include="Classes\sources\Texture.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="Models\Bird\Bird.cpp" />
+    <ClCompile Include="Models\Carpet\Carpet.cpp" />
+    <ClCompile Include="Models\Chair\Chair.cpp" />
     <ClCompile Include="Models\Clockdoorleft\Clockdoorleft.cpp" />
     <ClCompile Include="Models\Clockdoor\Clockdoor.cpp" />
     <ClCompile Include="Models\Backstage\Backstage.cpp" />
@@ -70,10 +80,14 @@
     <ClCompile Include="Models\MinIndicator\MinIndicator.cpp" />
     <ClCompile Include="Models\Pendulum\Pendulum.cpp" />
     <ClCompile Include="Models\SecIndicator\SecIndicator.cpp" />
+    <ClCompile Include="Models\Table\Table.cpp" />
+    <ClCompile Include="Models\Wardrobe\Wardrobe.cpp" />
     <ClCompile Include="Zegar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.fs" />
+    <None Include="Shaders\furFragment.fs" />
+    <None Include="Shaders\furVertex.vs" />
     <None Include="Shaders\vertex.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

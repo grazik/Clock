@@ -2,7 +2,7 @@
 
 namespace config {
 	float cameraX = -10.0f;
-	float cameraY = 3.8f;
+	float cameraY = 5.0f;
 	float cameraZ = 0.0f;
 	float cameraRotationAngleChange = 5.0f;
 	float cameraMoveAngleChange = 15.0f;

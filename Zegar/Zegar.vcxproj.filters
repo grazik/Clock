@@ -39,9 +39,6 @@
     <ClInclude Include="Classes\headers\Graphics.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\headers\lodepng.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\headers\Texture.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -103,6 +100,33 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Models\Backstage\BackstageInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Chair\Chair.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Chair\ChairInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Table\Table.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Table\TableInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Wardrobe\Wardrobe.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Wardrobe\WardrobeInternal.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\headers\lodepng.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Carpet\Carpet.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Carpet\CarpetInternal.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,12 +191,30 @@
     <ClCompile Include="Models\Clockdoorleft\Clockdoorleft.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Chair\Chair.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Table\Table.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Wardrobe\Wardrobe.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Carpet\Carpet.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\vertex.vs">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="Shaders\fragment.fs">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Shaders\furVertex.vs">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Shaders\furFragment.fs">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>
