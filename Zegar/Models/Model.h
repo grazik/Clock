@@ -29,10 +29,14 @@ class Model {
 
 		virtual void updateAngle(float newAngle) {}
 		virtual void changeDirection() {}
+		virtual bool getDirection() { return false; }
 		virtual bool getStatusOperate() { return false; }
-		virtual bool getStastus() { return false; }
+		virtual bool getStatus() { return false; }
 		virtual void changeOperate() {}
 		virtual void changeOpen() {}
+		virtual int getIteration() { return 0; };
+		virtual void incrementIteration() {}
+		virtual void clearIteration() {}
 
 	private:
 		std::string name;

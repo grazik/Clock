@@ -10,6 +10,9 @@ Bird::Bird(Shader* shader, Texture* tex, glm::vec3 pos) {
 	setShader(shader);
 	setPostiotion(pos);
 	texture = tex;
+	iteration = 0;
+	direction = false;
+	birdOperate = false;
 	prepareObject();
 }
 
@@ -24,10 +27,27 @@ void Bird::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
-	mM = glm::translate(mM, getPosition());
+	
 	glm::mat4 rotateY = glm::rotate(glm::mat4(1.0f), 3.14f * 180 / 180, glm::vec3(0, 1, 0));
 	glm::mat4 rotateX = glm::rotate(glm::mat4(1.0f), 3.14f * 90 / 180, glm::vec3(1, 0, 0));
-	mM = mM * rotateY * rotateX;
+
+	float factor = glfwGetTime();
+	if (factor > 1) {
+		factor = 1;
+	}
+
+	if (!direction) {
+		factor = 1 - factor;
+	}
+	
+	if (!birdOperate) {
+		factor = 0;
+	}
+
+	glm::vec3 pos = getPosition() + factor * glm::vec3(-1.5f, 0, 0);
+	glm::mat4 translate = glm::translate(glm::mat4(1.0f), pos);
+
+	mM = mM * translate * rotateY * rotateX;
 
 
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania

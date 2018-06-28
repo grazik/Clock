@@ -12,9 +12,16 @@ public:
 	GLuint getBufNormals() { return bufNormals; }
 	GLuint getBufTexCoords() { return bufTexCoords; }
 	Texture* getTexture() { return texture; }
+	int getIteration() { return iteration; }
+	bool getDirection() { return direction; }
+	bool getStatus() { return birdOperate; }
 
 	void drawObject(glm::mat4 mP, glm::mat4 mV);
 	void prepareObject();
+	void changeDirection() { direction = !direction; }
+	void incrementIteration() { iteration++; }
+	void clearIteration() { iteration = 0; }
+	void changeOperate() { birdOperate = !birdOperate; }
 
 private:
 	GLuint vao;
@@ -23,4 +30,7 @@ private:
 	GLuint bufTexCoords;
 	Texture* texture;
 
+	bool direction; // true forward, false backward
+	bool birdOperate;
+	int iteration;
 };

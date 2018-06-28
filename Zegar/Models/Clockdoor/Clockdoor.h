@@ -18,7 +18,7 @@ public:
 	void prepareObject();
 	
 	bool getStatusOperate() { return doorOperate; }
-	bool getStastus() { return open; }
+	bool getStatus() { return open; }
 	void changeOperate() { doorOperate = !doorOperate; }
 	void changeOpen() { open = !open; }
 

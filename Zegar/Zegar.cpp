@@ -73,6 +73,41 @@ void error_callback(int error, const char* description) {
 	fputs(description, stderr);
 }
 
+void operateDoors(std::map<std::string, Model*>& models) {
+	if (models["DoorRight"]->getStatusOperate()) {
+		models["DoorRight"]->changeOperate();
+		models["DoorLeft"]->changeOperate();
+		if (models["DoorRight"]->getStatus()) {  //tylko jak otwarte
+			models["Bird"]->changeOperate();
+		}
+	}
+
+	if (doorOperate) {
+		doorOperate = false;
+		if (!models["DoorRight"]->getStatusOperate() && !models["DoorRight"]->getStatus()) {
+			models["DoorRight"]->changeOpen();
+			models["DoorLeft"]->changeOpen();
+			models["DoorRight"]->changeOperate();
+			models["DoorLeft"]->changeOperate();
+		}
+	}
+
+	if (models["Bird"]->getStatus()) {
+		models["Bird"]->incrementIteration();
+		if (models["Bird"]->getIteration() > config::birdIterations) {
+			models["Bird"]->changeOperate();
+			models["DoorRight"]->changeOpen();
+			models["DoorLeft"]->changeOpen();
+			models["DoorRight"]->changeOperate();
+			models["DoorLeft"]->changeOperate();
+			models["Bird"]->clearIteration();
+		}
+		else {
+			models["Bird"]->changeDirection();
+		}
+	}
+}
+
 //Procedura obs³ugi klawiatury
 void key_callback(GLFWwindow* window, int key,
 	int scancode, int action, int mods) {
@@ -154,22 +189,7 @@ void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 		models["HoursIndicator"]->updateAngle(1/float(120));
 		models["SecIndicator"]->updateAngle(6.0f);
 		models["MinIndicator"]->updateAngle(0.1f);
-		if (models["DoorRight"]->getStatusOperate()) {
-			models["DoorRight"]->changeOperate();
-			models["DoorLeft"]->changeOperate();
-		}
-
-		if (doorOperate) {
-			doorOperate = false;
-			std::cout << "change\n";
-			if (!models["DoorRight"]->getStatusOperate() && !models["DoorRight"]->getStastus()) {
-				std::cout << "TATATAT";
-				models["DoorRight"]->changeOpen();
-				models["DoorLeft"]->changeOpen();
-				models["DoorRight"]->changeOperate();
-				models["DoorLeft"]->changeOperate();
-			}
-		}
+		operateDoors(models);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	
