@@ -1,60 +1,30 @@
-#include "Models/Clockdoor/Clockdoor.h"
-#include "Models/Clockdoor/ClockdoorInternal.h"
+#pragma once
+#include "Models/Bulb/Bulb.h"
+#include "Models/Bulb/BulbInternal.h"
 
-Clockdoor::Clockdoor(Shader* shader, Texture* tex, glm::vec3 pos) {
-	setName(ClockdoorInternal::name);
-	setVertices(ClockdoorInternal::vertices);
-	setVertexNormals(ClockdoorInternal::vertexNormals);
-	setTexCoords(ClockdoorInternal::texCoords);
-	setVertexCount(ClockdoorInternal::vertexCount);
+Bulb::Bulb(Shader* shader, glm::vec3 pos) {
+	setName(BulbInternal::name);
+	setVertices(BulbInternal::vertices);
+	setVertexNormals(BulbInternal::vertexNormals);
+	setVertexCount(BulbInternal::vertexCount);
 	setShader(shader);
 	setPostiotion(pos);
-	texture = tex;
-	open = false;
-	doorOperate = false;
 	prepareObject();
 }
 
-Clockdoor::~Clockdoor() {
+Bulb::~Bulb() {
 	glDeleteVertexArrays(1, &vao); //Usuniêcie vao
 	glDeleteBuffers(1, &bufVertices); //Usuniêcie VBO z wierzcho³kami
 	glDeleteBuffers(1, &bufNormals); //Usuniêcie VBO z wektorami normalnymi
-	glDeleteBuffers(1, &bufTexCoords); //Usuniêcie VBO z teksturami
 }
 
-void Clockdoor::drawObject(glm::mat4 mP, glm::mat4 mV) {
+void Bulb::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//Wylicz macierz modelu rysowanego obiektu
 
 	glm::mat4 mM = glm::mat4(1.0f);
-	glm::mat4 T = glm::translate(glm::mat4(1.0f), getPosition());
+	mM = glm::translate(mM, getPosition());
+	mM = glm::scale(mM, glm::vec3(5.0f));
 
-	glm::quat close = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * 0 / 180, glm::vec3(0, 1, 0)));  //0 - 180
-	glm::quat open = glm::quat_cast(glm::rotate(glm::mat4(1.0f), 3.14f * 180 / 180, glm::vec3(0, 1, 0)));  //0 - 180
-	glm::mat4 rotate;
-
-	float factor = glfwGetTime();
-	if (factor > 1) {
-		factor = 1;
-	}
-
-	if (doorOperate) {
-		if (!getOpen()) {
-			factor = 1 - factor;
-		}
-		rotate = glm::mat4_cast(glm::mix(close, open, factor));
-	}
-	else {
-		if (getOpen()) {
-			rotate = glm::mat4_cast(open);
-		}
-		else {
-			rotate = glm::mat4_cast(close);
-		}
-	}
-
-	mM = mM * T * rotate;
-
-	setUniforms();
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
 	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
@@ -71,10 +41,6 @@ void Clockdoor::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
-	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
 
 	//Uaktywnienie VAO i tym samym uaktywnienie predefiniowanych w tym VAO powi¹zañ slotów atrybutów z tablicami z danymi
 	glBindVertexArray(vao);
@@ -86,12 +52,10 @@ void Clockdoor::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glBindVertexArray(0);
 }
 
-void Clockdoor::prepareObject() {
+void Bulb::prepareObject() {
 	//Zbuduj VBO z danymi obiektu do narysowania
 	bufVertices = Graphics::makeBuffer(getVertices(), getVertexCount(), sizeof(float) * 4); //VBO ze wspó³rzêdnymi wierzcho³ków
 	bufNormals = Graphics::makeBuffer(getVertexNormals(), getVertexCount(), sizeof(float) * 4);//VBO z wektorami normalnymi wierzcho³ków
-	bufTexCoords = Graphics::makeBuffer(getTexCoords(), getVertexCount(), sizeof(float) * 2);
-
 
 	//Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
 	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
@@ -100,7 +64,6 @@ void Clockdoor::prepareObject() {
 
 	Graphics::assignVBOtoAttribute(getShader(), "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
-	Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
 
 	glBindVertexArray(0); //Dezaktywuj VAO
 }

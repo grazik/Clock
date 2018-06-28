@@ -49,7 +49,7 @@ void ClockFace::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
 	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
-
+	setUniforms();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->getHandler());
 

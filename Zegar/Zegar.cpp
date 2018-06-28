@@ -28,6 +28,7 @@ std::map<std::string, Shader*> prepareShaders() {
 	std::map<std::string, Shader*> shaders;
 
 	shaders.insert(std::pair<std::string, Shader*>("default", new Shader("shaders/vertex.vs", "", "shaders/fragment.fs")));
+	shaders.insert(std::pair<std::string, Shader*>("light", new Shader("shaders/lightVertex.vs", "", "shaders/lightFragment.fs")));
 	shaders.insert(std::pair<std::string, Shader*>("fur", new Shader("shaders/furVertex.vs", "", "shaders/furFragment.fs")));
 	
 	return shaders;
@@ -76,8 +77,15 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("Table", new Table(shaders["default"], textures["woodentable"], glm::vec3(-12.0f, 0.0f, 20.5))));
 	models.insert(std::pair<std::string, Model*>("Wardrobe", new Wardrobe(shaders["default"], textures["woodentable"], glm::vec3(7.5f, 0.0f, 26.2))));
 	models.insert(std::pair<std::string, Model*>("Carpet", new Carpet(shaders["fur"], textures["tiger"], textures["fur"], glm::vec3(0.0f, 0.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], shaders["light"], textures["brushedMetal"], glm::vec3(5.0f, 15.0f, 5.0f))));
 
 	return models;
+}
+
+void updateShaders(std::map<std::string, Shader*> shaders, Lamp* lamp) {
+	for (std::map<std::string, Shader*>::iterator it = shaders.begin(); it != shaders.end(); it++) {
+		it->second->setLights(lamp->lightPosition());
+	}
 }
 
 //Procedura obs³ugi b³êdów
@@ -249,6 +257,8 @@ int main(void) {
 	shaders = prepareShaders();
 	textures = prepareTextures();
 	models = prepareModels(shaders, textures);
+
+	updateShaders(shaders, dynamic_cast<Lamp*>(models["Lamp"]));
 
 	glfwSetTime(0); //Wyzeruj licznik czasu
 

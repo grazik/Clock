@@ -45,6 +45,7 @@ void Clock::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
+	setUniforms();
 	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
 
 	glActiveTexture(GL_TEXTURE0);

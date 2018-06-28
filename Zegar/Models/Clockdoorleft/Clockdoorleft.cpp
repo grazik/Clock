@@ -55,7 +55,7 @@ void Clockdoorleft::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 	mM = mM * rotate;
 
-
+	setUniforms();
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
 	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
