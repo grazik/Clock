@@ -2,12 +2,12 @@
 
 #include "Models/Model.h"
 #include "Classes/headers/Texture.h"
-
+/*
 class Carpet : public Model {
 public:
 	Carpet(Shader* shader, Texture* tex, Texture* tex2, glm::vec3 pos);
 	~Carpet();
-
+	
 	GLuint getVao() { return vao; }
 	GLuint getBufVertices() { return bufVertices; }
 	GLuint getBufNormals() { return bufNormals; }
@@ -24,4 +24,4 @@ private:
 	GLuint bufNormals; //Uchwyt na bufor VBO przechowuj¹cy tablickê wektorów normalnych
 	GLuint bufTexCoords;
 	std::vector<Texture*> textures;
-};
+};*/

@@ -1,6 +1,6 @@
 #include "Models/Carpet/Carpet.h"
 #include "Models/Carpet/CarpetInternal.h"
-
+/*
 Carpet::Carpet(Shader* shader, Texture* tex, Texture* tex2, glm::vec3 pos) {
 	setName(CarpetInternal::name);
 	setVertices(CarpetInternal::vertices);
@@ -36,7 +36,7 @@ void Carpet::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//W³¹czenie programu cieniuj¹cego, który ma zostaæ u¿yty do rysowania
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
 	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
-	getShader()->use();
+	//getShader()->use();
 
 	//Przeka¿ do shadera macierze P,V i M.
 	//W linijkach poni¿ej, polecenie:
@@ -72,13 +72,13 @@ void Carpet::prepareObject() {
 
 
 	//Zbuduj VAO wi¹¿¹cy atrybuty z konkretnymi VBO
-	glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
+	//glGenVertexArrays(1, &vao); //Wygeneruj uchwyt na VAO i zapisz go do zmiennej globalnej
 
-	glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
+	//glBindVertexArray(vao); //Uaktywnij nowo utworzony VAO
 
 	Graphics::assignVBOtoAttribute(getShader(), "vertex", bufVertices, 4); //"vertex" odnosi siê do deklaracji "in vec4 vertex;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "normal", bufNormals, 4); //"normal" odnosi siê do deklaracji "in vec4 normal;" w vertex shaderze
 	Graphics::assignVBOtoAttribute(getShader(), "texCoord0", bufTexCoords, 2);
 
 	glBindVertexArray(0); //Dezaktywuj VAO
-}
+}*/
