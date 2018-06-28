@@ -22,6 +22,8 @@ float aspect = 1; //Stosunek szerokoœci do wysokoœci okna
 /*Shader* shaderProgram = config::defaultShader;*/ //WskaŸnik na obiekt reprezentuj¹cy program cieniuj¹cy.
 Camera* camera = new Camera(config::cameraX, config::cameraY, config::cameraZ);
 
+bool doorOperate = false;
+
 std::map<std::string, Shader*> prepareShaders() {
 	std::map<std::string, Shader*> shaders;
 
@@ -36,6 +38,8 @@ std::map<std::string, Texture*> prepareTextures() {
 	textures.insert(std::pair<std::string, Texture*>("brushedMetal", new Texture("Textures/brushed-metal.png")));
 	textures.insert(std::pair < std::string, Texture*>("black", new Texture("Textures/maxresdefault.png")));
 	textures.insert(std::pair < std::string, Texture*>("clockFace", new Texture("Textures/clockface.png")));
+	textures.insert(std::pair < std::string, Texture*>("clock", new Texture("Textures/zegar.png")));
+	textures.insert(std::pair < std::string, Texture*>("bird", new Texture("Textures/bird.png")));
 	textures.insert(std::pair < std::string, Texture*>("gold", new Texture("Textures/gold.png")));
 	textures.insert(std::pair < std::string, Texture*>("backstage", new Texture("Textures/backstage.png")));
 	
@@ -51,13 +55,17 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	int seconds = aTime.tm_sec;
 	std::map<std::string, Model*> models;
 
-	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0,0,-0.5f), 1.0f, 30.0f)));
-	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 0, 0.5f), 1.2f, 0.0f)));
-	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushedMetal"], glm::vec3(-0.2, 0, 0), 30.0f)));
-	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
-	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), minutes * 6 + seconds * 0.1 )));
-	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), seconds * 6)));
-	models.insert(std::pair<std::string, Model*>("ClockFace", new ClockFace(shaders["default"], textures["clockFace"], glm::vec3(0.0f, 2.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Gear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, -0.5f), 1.0f, 30.0f)));
+	models.insert(std::pair<std::string, Model*>("BiggerGear", new Gear(shaders["default"], textures["brushedMetal"], glm::vec3(0, 2.8f, 0.5f), 1.2f, 0.0f)));
+	models.insert(std::pair<std::string, Model*>("Pendulum", new Pendulum(shaders["default"], textures["brushedMetal"], glm::vec3(0.2f, 2.8f, 0), 30.0f)));
+	models.insert(std::pair<std::string, Model*>("ClockFace", new ClockFace(shaders["default"], textures["clockFace"], glm::vec3(-1.0f, 5.5f, 0))));
+	models.insert(std::pair<std::string, Model*>("HoursIndicator", new HoursIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), (hours % 12) * 30 + (minutes / float(60)) * 30 + (seconds / float(60)) * 6)));
+	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), minutes * 6 + seconds * 0.1 )));
+	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], models["ClockFace"]->getPosition(), seconds * 6)));
+	models.insert(std::pair<std::string, Model*>("Clock", new Clock(shaders["default"], textures["clock"], glm::vec3(0, 0.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Bird", new Bird(shaders["default"], textures["bird"], glm::vec3(-0.5, 4.2f, 0.1))));
+	models.insert(std::pair<std::string, Model*>("DoorLeft", new Clockdoorleft(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, -0.3))));
+	models.insert(std::pair<std::string, Model*>("DoorRight", new Clockdoor(shaders["default"], textures["clock"], glm::vec3(-0.9f, 4.2f, 0.4))));
 	//models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], textures["gold"], glm::vec3(0.0f, 2.0f, 0))));
 	models.insert(std::pair<std::string, Model*>("Backstage", new Backstage(shaders["default"], textures["backstage"], glm::vec3(0.0f, 0.0f, 0))));
 
@@ -67,6 +75,41 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 //Procedura obs³ugi b³êdów
 void error_callback(int error, const char* description) {
 	fputs(description, stderr);
+}
+
+void operateDoors(std::map<std::string, Model*>& models) {
+	if (models["DoorRight"]->getStatusOperate()) {
+		models["DoorRight"]->changeOperate();
+		models["DoorLeft"]->changeOperate();
+		if (models["DoorRight"]->getStatus()) {  //tylko jak otwarte
+			models["Bird"]->changeOperate();
+		}
+	}
+
+	if (doorOperate) {
+		doorOperate = false;
+		if (!models["DoorRight"]->getStatusOperate() && !models["DoorRight"]->getStatus()) {
+			models["DoorRight"]->changeOpen();
+			models["DoorLeft"]->changeOpen();
+			models["DoorRight"]->changeOperate();
+			models["DoorLeft"]->changeOperate();
+		}
+	}
+
+	if (models["Bird"]->getStatus()) {
+		models["Bird"]->incrementIteration();
+		if (models["Bird"]->getIteration() > config::birdIterations) {
+			models["Bird"]->changeOperate();
+			models["DoorRight"]->changeOpen();
+			models["DoorLeft"]->changeOpen();
+			models["DoorRight"]->changeOperate();
+			models["DoorLeft"]->changeOperate();
+			models["Bird"]->clearIteration();
+		}
+		else {
+			models["Bird"]->changeDirection();
+		}
+	}
 }
 
 //Procedura obs³ugi klawiatury
@@ -82,6 +125,9 @@ void key_callback(GLFWwindow* window, int key,
 		if (key == GLFW_KEY_DOWN) {
 			camera->updateMoveAngle(-config::cameraMoveAngleChange);
 			camera->updatePostion(-cos(3.14f * camera->getRotationAngle() / 180), -config::cameraMoveFactor * sin(camera->getMoveAngle() * 3.14 / 180), -sin(3.14f * camera->getRotationAngle() / 180));
+		}
+		if (key == GLFW_KEY_A && !doorOperate) {
+			doorOperate = true;
 		}
 	}
 }
@@ -105,6 +151,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, key_callback); //Zarejestruj procedurê obs³ugi klawiatury
 	glfwSetFramebufferSizeCallback(window, windowResize); //Zarejestruj procedurê obs³ugi zmiany rozmiaru bufora ramki
 	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_CULL_FACE);
 }
 
 //Zwolnienie zasobów zajêtych przez program
@@ -146,6 +193,7 @@ void drawScene(GLFWwindow* window, std::map<std::string, Model*>& models) {
 		models["HoursIndicator"]->updateAngle(1/float(120));
 		models["SecIndicator"]->updateAngle(6.0f);
 		models["MinIndicator"]->updateAngle(0.1f);
+		operateDoors(models);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 	}
 	

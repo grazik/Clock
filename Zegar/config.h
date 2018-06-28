@@ -11,4 +11,5 @@ namespace config {
 	extern float cameraMoveAngleChange;
 	extern float cameraMoveFactor;
 	extern std::string modelPath;
+	extern int birdIterations;
 }
