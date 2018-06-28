@@ -108,7 +108,7 @@ void operateDoors(std::map<std::string, Model*>& models) {
 		else {
 			models["Bird"]->changeDirection();
 		}
-	}
+	}*
 }
 
 //Procedura obs³ugi klawiatury
