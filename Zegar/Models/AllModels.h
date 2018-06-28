@@ -8,3 +8,4 @@
 #include "Models/SecIndicator/SecIndicator.h"
 #include "Models/MinIndicator/MinIndicator.h"
 #include "Models/Lamp/Lamp.h"
+#include "Models/Backstage/Backstage.h"

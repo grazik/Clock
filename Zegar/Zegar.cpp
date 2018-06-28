@@ -37,6 +37,7 @@ std::map<std::string, Texture*> prepareTextures() {
 	textures.insert(std::pair < std::string, Texture*>("black", new Texture("Textures/maxresdefault.png")));
 	textures.insert(std::pair < std::string, Texture*>("clockFace", new Texture("Textures/clockface.png")));
 	textures.insert(std::pair < std::string, Texture*>("gold", new Texture("Textures/gold.png")));
+	textures.insert(std::pair < std::string, Texture*>("backstage", new Texture("Textures/backstage.png")));
 	
 	return textures;
 }
@@ -57,7 +58,8 @@ std::map<std::string, Model*> prepareModels(std::map<std::string, Shader*> shade
 	models.insert(std::pair<std::string, Model*>("MinIndicator", new MinIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), minutes * 6 + seconds * 0.1 )));
 	models.insert(std::pair<std::string, Model*>("SecIndicator", new SecIndicator(shaders["default"], textures["black"], glm::vec3(-0.5f, 0, 0), seconds * 6)));
 	models.insert(std::pair<std::string, Model*>("ClockFace", new ClockFace(shaders["default"], textures["clockFace"], glm::vec3(0.0f, 2.0f, 0))));
-	models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], textures["gold"], glm::vec3(0.0f, 2.0f, 0))));
+	//models.insert(std::pair<std::string, Model*>("Lamp", new Lamp(shaders["default"], textures["gold"], glm::vec3(0.0f, 2.0f, 0))));
+	models.insert(std::pair<std::string, Model*>("Backstage", new Backstage(shaders["default"], textures["backstage"], glm::vec3(0.0f, 0.0f, 0))));
 
 	return models;
 }
