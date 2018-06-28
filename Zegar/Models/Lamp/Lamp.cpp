@@ -60,10 +60,40 @@ void Lamp::drawObject(glm::mat4 mP, glm::mat4 mV) {
 
 void Lamp::prepareLights() {
 	glm::mat4 mM = glm::mat4(1.0f);
-	glm::vec4 pos = glm::vec4(0.16f, -5, 3.0f, 1);
+	glm::vec4 pos = glm::vec4(-0.35f, -5.3f, -2.86f, 1);
 	pos = modelMatrix * mM * pos;
 	
 	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos)));
+
+	glm::mat4 mM2 = glm::mat4(1.0f);
+	glm::vec4 pos2 = glm::vec4(-2.31f, -5.3f, -1.73f, 1);
+	pos2 = modelMatrix * mM2 * pos2;
+
+	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos2)));
+
+	glm::mat4 mM3 = glm::mat4(1.0f);
+	glm::vec4 pos3 = glm::vec4(2.7f, -5.3f, -1.10f, 1);
+	pos3 = modelMatrix * mM3 * pos3;
+
+	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos3)));
+
+	glm::mat4 mM4 = glm::mat4(1.0f);
+	glm::vec4 pos4 = glm::vec4(2.7f, -5.3, 1.18f, 1);
+	pos4 = modelMatrix * mM4 * pos4;
+
+	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos4)));
+
+	glm::mat4 mM5 = glm::mat4(1.0f);
+	glm::vec4 pos5 = glm::vec4(-2.34f, -5.3f, 1.75f, 1);
+	pos5 = modelMatrix * mM5 * pos5;
+
+	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos5)));
+
+	glm::mat4 mM6 = glm::mat4(1.0f);
+	glm::vec4 pos6 = glm::vec4(-0.35f, -5.3f, 2.93f, 1);
+	pos6 = modelMatrix * mM6 * pos6;
+
+	bulbs.push_back(new Bulb(lightShader, glm::vec3(pos6)));
 }
 
 void Lamp::prepareObject() {
