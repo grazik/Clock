@@ -45,16 +45,23 @@ const path = require('path'),
    		},"").split('\n').filter(cur => cur.length>3).join('\n');
 
 
-    	const data = `#pragma once
+    	let data = `#pragma once
 		#include <string>
 		#include <sstream>
 		namespace ${name}${configName} {
 		std::string name = "${name}";
 		int vertexCount = ${faces.length*3};
 		float vertices[] = { ${vertex_array}};
-		float vertexNormals[] = {${vertex_normals_array}};
-		float texCoords[] = {${vertex_texture_array}};
+		float vertexNormals[] = {${vertex_normals_array}};`;
+
+		if (vertex_texture_array.length != 0) {
+			data = `${data} ;
+			float texCoords[] = {${vertex_texture_array}};`;
+		}
+
+		data = `${data}
 		}`;
+		
 
 		fs.writeFile(path.join(pathName, `${name}${configName}.h`), data, (err) => {
 			if (err) {
