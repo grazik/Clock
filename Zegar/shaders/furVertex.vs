@@ -9,6 +9,7 @@ uniform float maxFurLength; //d³ugoœæ futra
 uniform float maxLayer; //liczba rysowanych warstw
 
 
+
 //Atrybuty
 in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
 in vec4 color;  //kolor wierzcholka (na razie ignorowany)

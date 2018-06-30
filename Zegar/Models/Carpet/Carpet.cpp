@@ -49,7 +49,7 @@ void Carpet::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	glUniformMatrix4fv(getShader()->getUniformLocation("P"), 1, false, glm::value_ptr(mP));
 	glUniformMatrix4fv(getShader()->getUniformLocation("V"), 1, false, glm::value_ptr(mV));
 	glUniformMatrix4fv(getShader()->getUniformLocation("M"), 1, false, glm::value_ptr(mM));
-	glUniform1f(getShader()->getUniformLocation("maxFurLength"), 0.1);
+	glUniform1f(getShader()->getUniformLocation("maxFurLength"), 0.6);
 	glUniform1f(getShader()->getUniformLocation("maxLayer"), 100);
 	glUniform1i(getShader()->getUniformLocation("textureMap0"), 0);
 	glUniform1i(getShader()->getUniformLocation("textureMap1"), 1);
