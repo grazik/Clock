@@ -49,7 +49,7 @@ void Pendulum::drawObject(glm::mat4 mP, glm::mat4 mV) {
 	//W tym programie wystarczy³oby wywo³aæ to raz, w setupShaders, ale chodzi o pokazanie,
 	//¿e mozna zmieniaæ program cieniuj¹cy podczas rysowania jednej sceny
 	getShader()->use();
-
+	setUniforms();
 	//Przeka¿ do shadera macierze P,V i M.
 	//W linijkach poni¿ej, polecenie:
 	//  shaderProgram->getUniformLocation("P")

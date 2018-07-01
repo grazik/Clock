@@ -23,6 +23,7 @@ class Model {
 		void setTexCoords(float* texCoordsArray) { texCoords = texCoordsArray; }
 		void setShader(Shader* newShader) { shader = newShader; }
 		void setPostiotion(glm::vec3 pos) { position = pos; }
+		void setUniforms();
 
 		virtual void drawObject(glm::mat4 mP, glm::mat4 mV) = 0;
 		virtual void prepareObject() = 0;
